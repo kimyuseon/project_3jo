@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}냉장고 파먹기{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/my_django.css' %}">
+    <link rel="stylesheet" href="{% static 'css/my_recipe.css' %}">
 </head>
 <body>
     <nav class="nav-bar">
-        <a href="/" id="nav-home">🏠 홈</a> 
-        <a href="{% url 'my_django:fridge_main' %}" id="nav-fridge">🧊 냉장고</a>
-        <a href="{% url 'my_recipe:recipe_list' %}" id="nav-recipe">🍳 레시피</a>
-        <a href="{% url 'community:post_list' %}" id="nav-community">👥 커뮤니티</a>
+        <a href="/" id="nav-home">홈 스윗 홈</a> 
+        <a href="{% url 'my_django:fridge_main' %}" id="nav-fridge">나의 냉장고</a>
+        <a href="{% url 'my_recipe:recipe_list' %}" id="nav-recipe">나만의 레시피</a>
+        <a href="{% url 'community:post_list' %}" id="nav-community">커뮤니티 게시판</a>
     </nav>
 
     <div class="container">

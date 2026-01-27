@@ -14,7 +14,7 @@ def recipe_list(request):
         
         if request.GET.get('recommend') == 'true' or '추천' in request.GET:
             #내 구글제미나이 API키
-            genai.configure(api_key="AIzaSyCuQtKtBYAfYSHtOBsWps3bTSggP8-tJSY")            
+            genai.configure(api_key="AIzaSyCOI1NSdYFz8yCFkSNgGRC79-UxeoKbcYs")            
             model = genai.GenerativeModel('models/gemini-2.5-flash')
             #내가 입력한문장대로 정해주니까 이거 수정하면 됨.
             prompt = f"{search_query} 관련된 레시피를 제목, 재료, 순서로 짧고 간결하게 한국어로 추천해줘"

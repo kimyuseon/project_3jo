@@ -8,7 +8,14 @@
 
 <div class="recipe-grid-container">
     <div class="header-section" style="margin: 20px 0 30px;">
-        <h1 style="font-size: 24px; margin-bottom: 20px;">🍳 추천 레시피</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1 style="font-size: 24px; margin: 0;">추천 레시피</h1>
+            
+            <a href="{% url 'my_recipe:recipe_add' %}" 
+               style="background: #ffffff; color: #000000; text-decoration: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; font-size: 14px; border: 1px solid #000000;">
+               + 레시피 등록
+            </a>
+        </div>
         
         <form action="{% url 'my_recipe:recipe_list' %}" method="GET" class="search-form" style="display: flex; gap: 8px;">
             <input type="text" name="q" value="{{ search_query }}" placeholder="재료나 요리명 입력" 
@@ -16,31 +23,36 @@
             <button type="submit" class="btn-search" style="padding: 0 15px; background: #eee; border: none; border-radius: 10px; font-weight: bold;">검색</button>
             <button type="submit" name="recommend" value="true" class="btn-ai" 
                     style="padding: 0 15px; background: #5e35b1; color: white; border: none; border-radius: 10px; font-weight: bold;"
-                    onclick="document.getElementById('loading-overlay').style.display='block';">AI 추천</button>
+                    onclick="document.getElementById('loading-overlay').style.display='block';">AI 레시피 추천</button>
         </form>
     </div>
 
     {% if ai_recommendation %}
     <div class="ai-box" style="background: #f3f0ff; border: 1px solid #d1c4e9; padding: 20px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(94, 53, 177, 0.1);">
-        <h3 style="color: #5e35b1; margin-top: 0; display: flex; align-items: center; gap: 5px;">✨ AI 맞춤 제안</h3>
+        <h3 style="color: #5e35b1; margin-top: 0; display: flex; align-items: center; gap: 5px;">AI 맞춤 제안</h3>
         <div style="white-space: pre-wrap; line-height: 1.6; font-size: 14px; color: #444;">{{ ai_recommendation }}</div>
     </div>
     {% endif %}
 
-    <div class="grid"> {% for recipe in recipes %}
-        <div class="card"> {% if recipe.image %}
-                <img src="{{ recipe.image.url }}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
-            {% else %}
-                <div style="width: 100%; height: 120px; background: #f8f9fa; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #ccc;">No Image</div>
-            {% endif %}
+    <div class="grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;"> 
+        {% for recipe in recipes %}
+        <div class="card" style="background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; transition: transform 0.2s ease;"> 
             
-            <h3 style="font-size: 16px; margin: 10px 0 5px; text-align: left;">{{ recipe.title }}</h3>
+            <a href="{% url 'my_recipe:recipe_detail' recipe.pk %}" style="text-decoration: none; color: inherit;">
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+                {% else %}
+                    <div style="width: 100%; height: 120px; background: #f8f9fa; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #ccc;">No Image</div>
+                {% endif %}
+                
+                <h3 style="font-size: 16px; margin: 10px 0 5px; text-align: left; font-weight: bold;">{{ recipe.title }}</h3>
+            </a>
+
             <p style="font-size: 12px; color: #888; text-align: left; margin-bottom: 15px;">{{ recipe.description|truncatechars:30 }}</p>
             
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span style="font-size: 11px; background: #e8f5e9; color: #2e7d32; padding: 3px 8px; border-radius: 5px;">{{ recipe.difficulty }}</span>
-                <a href="{% url 'my_recipe:recipe_detail' recipe.pk %}" style="text-decoration: none; color: #ff6b6b; font-weight: bold; font-size: 14px;">레시피 보기</a>
-            </div>
+                </div>
         </div>
         {% empty %}
         <p style="text-align: center; width: 100%; color: #888; padding: 50px 0;">등록된 레시피가 없습니다.</p>
@@ -50,5 +62,7 @@
 
 <style>
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    /* 카드에 마우스 올렸을 때 살짝 반응하는 효과 (선택사항) */
+    .card:hover { transform: translateY(-3px); }
 </style>
 {% endblock %}

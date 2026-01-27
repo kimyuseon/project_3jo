@@ -13,7 +13,7 @@ body {
     padding: 0 20px;
 }
 
-/* 2. 네비게이션 바 (양 끝 정렬) */
+/* 2. 네비게이션 바 */
 nav {
     background-color: white;
     border-bottom: 1px solid #eee;
@@ -29,253 +29,201 @@ nav {
     padding: 0 20px;
 }
 
-.logo {
-    font-size: 1.4rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-item {
-    text-decoration: none;
-    color: #666;
-}
-
-.btn-add { /* 상단 네비바 버튼 */
-    background-color: #28a745;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
 /* 3. 레시피 목록 (그리드 레이아웃) */
 .recipe-grid-container {
     margin: 40px auto;
 }
 
-.header-section {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
 .recipe-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 25px;
-}
-
-.recipe-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
-}
-
-.recipe-card:hover {
-    transform: translateY(-10px);
-}
-
-.recipe-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-}
-
-.difficulty-badge {
-    font-size: 0.8rem;
-    padding: 4px 10px;
-    background: #f0f2f5;
-    border-radius: 20px;
 }
 
 /* 4. 등록 폼 디자인 */
 .recipe-form-container {
-    max-width: 600px;
+    max-width: 650px;
     margin: 50px auto;
-    background: white;
     padding: 40px;
-    border-radius: 15px;
+    background: #ffffff;
+    border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
 }
 
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.form-subtitle {
+    color: #888;
+    font-size: 15px;
+}
+
+/* 5. 입력 필드 그룹 */
 .field-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 25px;
 }
 
 .field-group label {
-    font-weight: bold;
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    color: #444;
     margin-bottom: 8px;
 }
 
 .field-group input, 
 .field-group textarea, 
 .field-group select {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    font-size: 15px;
+    background-color: #fafafa;
+    transition: all 0.2s;
+    box-sizing: border-box;
 }
 
+.field-group input:focus, 
+.field-group textarea:focus {
+    outline: none;
+    border-color: #000;
+    background-color: #fff;
+}
+
+.field-group textarea {
+    height: 180px;
+    resize: none;
+}
+
+/* 6. 버튼 영역 (나란히 배치 핵심) */
 .form-actions {
-    text-align: center;
-    margin-top: 30px;
+    display: flex;         /* 가로 정렬 */
+    justify-content: center; /* 가운데 모음 */
+    gap: 12px;            /* 버튼 사이 간격 */
+    margin-top: 40px;
 }
 
+/* 등록하기 버튼 (검정) */
 .btn-submit {
-    padding: 12px 24px;
-    background-color: #28a745;
-    color: white;
+    flex: 1;               /* 동일 비율 */
+    max-width: 180px;      /* 너무 커지지 않게 제한 */
+    background: #000;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    padding: 16px;
+    border-radius: 12px;
     font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;}
+
+    /* 전체 컨테이너 및 레이아웃 */
+.recipe-detail-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    font-family: 'Pretendard', sans-serif;
 }
 
-/* 5. 상세 페이지 디자인 */
-.recipe-detail-container {
-    max-width: 800px;
-    margin: 40px auto;
-    background: white;
-    padding: 40px;
+.recipe-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #222;
+}
+
+.recipe-meta {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.difficulty-label {
+    font-size: 14px;
+    color: #888;
+}
+
+.difficulty-value {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* 🖼️ 이미지 크기 조절 핵심 */
+.recipe-image-wrapper {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
     border-radius: 20px;
+    overflow: hidden;
+    background: #f9f9f9;
 }
 
 .recipe-detail-img {
-    width: 100%;
-    max-height: 450px;
-    object-fit: cover;
-    border-radius: 15px;
-    margin-bottom: 30px;
+    max-width: 100%;    /* 부모 너비를 넘지 않음 */
+    max-height: 400px;  /* 💡 사진이 너무 크지 않게 높이 제한 */
+    height: auto;       /* 비율 유지 */
+    width: auto;
+    object-fit: contain;
+    border-radius: 20px;
+    display: block;
+    margin: 0 auto;
 }
 
+/* 섹션 공통 스타일 */
 .recipe-section {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: #fdfdfd;
-    border-left: 5px solid #28a745;
-    border-radius: 0 10px 10px 0;
+    margin-bottom: 40px;
 }
 
 .recipe-section h3 {
-    margin-top: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.content-text {
+    line-height: 1.8;
+    color: #555;
+    font-size: 16px;
+    padding: 10px;
+}
+
+/* 하단 버튼 */
+.detail-actions {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
 }
 
 .btn-back {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #6c757d;
-    color: white;
+    padding: 14px 40px;
+    background: #333;
+    color: #fff;
     text-decoration: none;
-    border-radius: 5px;
-}
-
-/* 버튼들을 가로로 나란히 배치 */
-.form-actions {
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    align-items: center;
-    gap: 15px; /* 버튼 사이 간격 */
-    margin-top: 30px;
-}
-
-/* 취소 버튼 스타일 (회색 버튼 모양) */
-.btn-cancel {
-    display: inline-block;
-    padding: 11px 24px;
-    background-color: #e9ecef;
-    color: #495057;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
+    border-radius: 12px;
+    font-weight: 600;
     transition: background 0.2s;
 }
 
-.search-form {
-    display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬로 변경 */
-    gap: 10px;
-    margin: 20px 0 30px 0;
-}
-
-.search-form input {
-    width: 300px; /* 고정 크기로 해서 너무 길어지지 않게 조절 */
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-}
-
-.search-form input:focus {
-    border-color: #28a745;
-}
-
-.btn-search {
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* AI 추천 버튼 */
-.btn-ai {
-    padding: 10px 20px;
-    background-color: #6f42c1;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-.btn-ai:hover {
-    background-color: #59359a;
-}
-
-/* AI 결과 박스 */
-.ai-box {
-    background-color: #f8f5ff;
-    border: 1px solid #d1c4e9;
-    padding: 30px;
-    border-radius: 15px;
-    margin: 0 auto 40px auto;
-    max-width: 900px;
-    box-shadow: 0 4px 15px rgba(111, 66, 193, 0.08);
-}
-
-.ai-box h3 {
-    color: #5e35b1;
-    margin-top: 0;
-    font-size: 1.2rem;
-    border-bottom: 1px solid #d1c4e9;
-    padding-bottom: 10px;
-}
-
-.ai-box .content-text {
-    margin-top: 15px;
-    line-height: 1.8;
+.btn-back:hover {
+    background: #555;
 }

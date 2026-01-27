@@ -10,14 +10,14 @@
 </head>
 <body>
     <nav class="nav-bar">
-        <a href="/" class="active">🏠 홈</a> 
-        <a href="{% url 'my_django:fridge_main' %}">🧊 내 냉장고</a>
-        <a href="{% url 'my_recipe:recipe_list' %}">🍳 레시피</a>
-        <a href="{% url 'community:post_list' %}">👥 커뮤니티</a>
+        <a href="/" class="active">홈 스윗 홈</a> 
+        <a href="{% url 'my_django:fridge_main' %}">나의 냉장고</a>
+        <a href="{% url 'my_recipe:recipe_list' %}">나만의 레시피</a>
+        <a href="{% url 'community:post_list' %}">커뮤니티 게시판</a>
     </nav>
 
     <main class="main-container" style="text-align: center; padding: 50px 20px;">
-        <h1 class="main-title">{{ user.username|default:"우리" }}의 냉장고 재료로 요리를 해볼까요?</h1>
+        <h1 class="main-title">나의 냉장고 재료로 요리를 해볼까요?</h1>
         
         <div style="margin-top: 30px;">
 

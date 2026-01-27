@@ -16,6 +16,7 @@ def post_list(request):
 #특정 글 보기
 #만약 로그인한 사용자만 댓글을 달게 하고싶다면 @login_required 데코레이션 추가한다.
 #위에 from django.contrib.auth.decorators import login_required도 추가 같이 해줘야한다.
+
 def post_detail(request, post_id):
     my_post = Post.objects.get(id=post_id)
 

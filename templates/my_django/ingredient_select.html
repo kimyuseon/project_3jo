@@ -3,56 +3,56 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/my_django.css' %}">
+    <title>재료 선택</title>
 </head>
-<body style="background: #fff;">
+<body class="select-page">
     <div class="container">
-        <div style="display: flex; align-items: center; margin-bottom: 25px;">
-            <a href="{% url 'fridge_main' %}" style="text-decoration: none; font-size: 24px; color: #000; margin-right: 15px;">✕</a>
-            <h2 style="font-size: 20px; margin: 0; font-weight: 800;">재료 폴더 선택</h2>
-        </div>
+        <header class="select-header">
+            <a href="{% url 'my_django:fridge_main' %}" class="close-btn">✕</a>
+            <h2 class="title-text">재료 폴더 선택</h2>
+        </header>
 
-        <div class="category-tabs">
+        <div class="category-scroll-wrapper">
             {% for category in sample_data.keys %}
-                <div class="tab-item {% if forloop.first %}active{% endif %}" onclick="openTab(event, 'tab-{{ forloop.counter }}')">
+                <div class="category-tab {% if forloop.first %}active{% endif %}" 
+                     onclick="openTab(event, 'tab-{{ forloop.counter }}')">
                     {{ category }}
                 </div>
             {% endfor %}
         </div>
 
-        {% for category, items in sample_data.items %}
-            <div id="tab-{{ forloop.counter }}" class="tab-content {% if forloop.first %}active{% endif %}">
-                <div class="item-grid">
-                    {% for name in items %}
-                    <form method="post" style="margin: 0;">
-                        {% csrf_token %}
-                        <input type="hidden" name="name" value="{{ name }}">
-                        <input type="hidden" name="category" value="{{ category }}">
-                        <button type="submit" class="item-button">
-                            <div class="image-box" style="margin-bottom: 5px;">
-                                <img src="{% static 'images/' %}{{ name }}.png" 
-                                     alt="{{ name }}" 
-                                     style="width: 45px; height: 45px; object-fit: contain;">
+        <div class="ingredient-content">
+            {% for category, items in sample_data.items %}
+                <div id="tab-{{ forloop.counter }}" class="ingredient-panel {% if forloop.first %}show{% endif %}">
+                    <div class="ingredient-grid">
+                        {% for item in items %}
+                            <div class="ingredient-card">
+                                <div class="ingredient-icon-box">
+                                    <img src="{% static 'images/' %}{{ item }}.png" 
+                                         alt="{{ item }}" 
+                                         class="ingredient-img"
+                                         onerror="this.src='{% static 'images/default.png' %}';">
+                                </div>
+                                <span class="ingredient-name">{{ item }}</span>
+                                <button class="add-badge">+</button>
                             </div>
-                            <span class="name" style="font-size: 11px; display: block;">{{ name }}</span>
-                        </button>
-                    </form>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 
     <script>
         function openTab(evt, tabId) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
-            tablinks = document.getElementsByClassName("tab-item");
-            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
-            document.getElementById(tabId).classList.add("active");
-            evt.currentTarget.classList.add("active");
+            const panels = document.querySelectorAll('.ingredient-panel');
+            const tabs = document.querySelectorAll('.category-tab');
+            panels.forEach(p => p.classList.remove('show'));
+            tabs.forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('show');
+            evt.currentTarget.classList.add('active');
         }
     </script>
 </body>
