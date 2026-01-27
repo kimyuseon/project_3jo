@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import SignUpForm
 from .models import UserProfile
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.shortcuts import redirect
@@ -32,7 +31,7 @@ def login_view(request): #로그인 기능
             auth_login(request, user)
             return redirect('index') 
         else:
-            return render(request, 'community/login.html', {'error': '로그인 실패'})
+            return render(request, 'login.html', {'error': '로그인 실패'})
     else:
         return render(request, 'community/login.html')
     
