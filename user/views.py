@@ -1,11 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .forms import SignUpForm
 from .models import UserProfile
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.shortcuts import redirect
 
 
 def SignUp_view(request): #회원가입 기능
@@ -42,4 +38,4 @@ def logout_view(request): #로그아웃 기능
     return redirect('index') 
 
 def main_index(request):
-    return render(request, 'templates/index.html')
+    return render(request, 'index.html')
