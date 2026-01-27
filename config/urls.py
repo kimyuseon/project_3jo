@@ -23,6 +23,7 @@ urlpatterns = [
     re_path('^admin/', admin.site.urls),
     re_path('^community/', include("community.urls")),
     re_path(r'^recipe/', include('my_recipe.urls')),
+    re_path('^user/', include('user.urls')),
 ]
 
 

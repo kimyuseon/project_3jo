@@ -3,9 +3,8 @@ from .models import Post, Comment
 from django.urls import reverse
 
 
-
 def index(request):
-    return render(request, "community/index.html")
+    return render(request, "index.html")
 
 #전체목록보기
 def post_list(request):
@@ -102,3 +101,9 @@ def post_delete(request, post_id):
     my_post.delete()
     #삭제 후 목록으로 이동
     return redirect("community:post_list")
+
+def login_view(request): 
+    if request.method == 'POST':
+        return render(request, 'community/login.html')
+    else:
+        return render(request, 'community/login.html')

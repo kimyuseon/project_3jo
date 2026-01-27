@@ -1,14 +1,18 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>냉장고를 부탁해!</title>
-    <link rel="stylesheet" href="{% static 'css/my_style.css' %}">
-</head>
 <body>
-    <h1>보유재료 기반으로 요리를 해볼까욥</h1>
-    <small>Lets go together!</small>
+    <nav>
+        <a href="{% url 'recipe:recipe_list' %}">레시피 보러가기</a> | 
+        <a href="{% url 'community:post_list' %}">커뮤니티 게시판</a>
+    </nav>
+
+    <hr>
+
+    <h1>보유재료 기반으로 요리를 해볼까요?</h1>
+    
+    <section class="ingredient-section">
+        <h3>오늘 냉장고에 넣을 재료는?</h3>
+        <input type="text" placeholder="예: 양파">
+        <button type="button">추가하기</button>
+    </section>
+
+    <small>맛있게 드세요!</small>
 </body>
-</html>

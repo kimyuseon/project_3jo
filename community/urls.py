@@ -5,6 +5,7 @@ app_name = "community"
 
 urlpatterns = [
     re_path("^$", views.index, name="index"), #주소창에 아무것도 안쳤을 때 홈
+    re_path(r'^login/$', views.login_view, name='login'),
     re_path("^posts/$", views.post_list, name="post_list"), #게시글 목록 페이지
     re_path("^posts/(?P<post_id>\d+)/$", views.post_detail, name="post_detail"),#상세페이지
     re_path("^posts/add/$", views.post_add, name="post_add"), #게시글 작성
