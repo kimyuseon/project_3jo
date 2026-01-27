@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Post, Comment
 from django.urls import reverse
 
-
+#유선 테스트입니다. 확인 후에 지울게요!
 
 def index(request):
     return render(request, "community/index.html")
