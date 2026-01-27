@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static 'css/community.css' %}">
+    <title>새 글 작성</title>
+</head>
+<body>
+    <div id="navbar">
+        <a href="{% url 'community:post_list' %}" style="text-decoration:none; color:#333;">← 목록으로</a>
+        <span>커뮤니티 : <b>레시피 등록하기</b></span>
+    </div>
+
+    <div id="post-form-container">
+        <h2 style="margin-top:0;">어떤 레시피를 공유해 주실건가요?</h2>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>레시피 제목</label>
+                <input type="text" name="title" placeholder="예: 엄마 손맛 김치찌개" required>
+            </div>
+
+            <div class="form-group">
+                <label>요리 설명</label>
+                <textarea name="content" placeholder="재료와 조리 순서를 자세히 적어주세요" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>요리 사진</label>
+                <input type="file" name="thumbnail">
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'community:post_list' %}" class="btn" style="background:#eee; color:#333;">취소</a>
+                <button type="submit" class="btn btn-primary">레시피 등록</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

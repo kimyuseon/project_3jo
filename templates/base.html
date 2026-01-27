@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>나만의 레시피</title>
+    <link rel="stylesheet" href="{% static 'css/my_recipe.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'my_recipe:recipe_list' %}" class="logo">나의 레시피</a>
+            <div class="nav-links">
+                <a href="{% url 'my_recipe:recipe_add' %}" class="btn-add">레시피 등록</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

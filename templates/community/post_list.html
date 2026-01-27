@@ -1,0 +1,37 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static 'css/community.css' %}">
+    <title>커뮤니티 목록</title>
+</head>
+<body>
+    <div id="navbar">
+        <span>커뮤니티 : <b>레시피 공유 게시판</b></span>
+        <a href="{% url 'community:post_add' %}" class="btn btn-primary">새 글 작성</a>
+    </div>
+
+    <div id="post-list">
+        <ul class="posts">
+            {% for post in posts %}
+                <li class="post">
+                    <div class="post-img-wrapper">
+                        {% if post.thumbnail %}
+                            <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+                        {% else %}
+                            <div style="background:#eee; height:100%;"></div>
+                        {% endif %}
+                    </div>
+                    <div class="post-content-preview">
+                        <a href="{% url 'community:post_detail' post.id %}">{{ post.title }}</a>
+                        <p>{{ post.content|truncatechars:60 }}</p>
+                        <small style="color:#999;">댓글 {{ post.comment_set.count }}개</small>
+                    </div>
+                </li>
+            {% empty %}
+                <p>아직 게시글이 없습니다.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

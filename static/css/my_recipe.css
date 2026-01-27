@@ -1,0 +1,281 @@
+/* 1. 기본 설정 */
+body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 2. 네비게이션 바 (양 끝 정렬) */
+nav {
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #666;
+}
+
+.btn-add { /* 상단 네비바 버튼 */
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* 3. 레시피 목록 (그리드 레이아웃) */
+.recipe-grid-container {
+    margin: 40px auto;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.recipe-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-10px);
+}
+
+.recipe-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.difficulty-badge {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    background: #f0f2f5;
+    border-radius: 20px;
+}
+
+/* 4. 등록 폼 디자인 */
+.recipe-form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.field-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.field-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.field-group input, 
+.field-group textarea, 
+.field-group select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-submit {
+    padding: 12px 24px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 5. 상세 페이지 디자인 */
+.recipe-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.recipe-detail-img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.recipe-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #fdfdfd;
+    border-left: 5px solid #28a745;
+    border-radius: 0 10px 10px 0;
+}
+
+.recipe-section h3 {
+    margin-top: 0;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* 버튼들을 가로로 나란히 배치 */
+.form-actions {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;
+    gap: 15px; /* 버튼 사이 간격 */
+    margin-top: 30px;
+}
+
+/* 취소 버튼 스타일 (회색 버튼 모양) */
+.btn-cancel {
+    display: inline-block;
+    padding: 11px 24px;
+    background-color: #e9ecef;
+    color: #495057;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.search-form {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬로 변경 */
+    gap: 10px;
+    margin: 20px 0 30px 0;
+}
+
+.search-form input {
+    width: 300px; /* 고정 크기로 해서 너무 길어지지 않게 조절 */
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+
+.search-form input:focus {
+    border-color: #28a745;
+}
+
+.btn-search {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* AI 추천 버튼 */
+.btn-ai {
+    padding: 10px 20px;
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-ai:hover {
+    background-color: #59359a;
+}
+
+/* AI 결과 박스 */
+.ai-box {
+    background-color: #f8f5ff;
+    border: 1px solid #d1c4e9;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 0 auto 40px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 15px rgba(111, 66, 193, 0.08);
+}
+
+.ai-box h3 {
+    color: #5e35b1;
+    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #d1c4e9;
+    padding-bottom: 10px;
+}
+
+.ai-box .content-text {
+    margin-top: 15px;
+    line-height: 1.8;
+}

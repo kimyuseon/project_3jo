@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="recipe-detail-container">
+    <h1 class="recipe-title">{{ recipe.title }}</h1>
+    
+    <div class="recipe-meta">
+        <span class="difficulty-label">난이도:</span>
+        <span class="difficulty-value">{{ recipe.difficulty }}</span>
+    </div>
+    
+    {% if recipe.image %}
+    <div class="recipe-image-wrapper">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-detail-img">
+    </div>
+    {% endif %}
+
+    <section class="recipe-section description-box">
+        <h3>요리 설명</h3>
+        <div class="content-text">
+            {{ recipe.description|linebreaks }}
+        </div>
+    </section>
+
+    <section class="recipe-section ingredients-box">
+        <h3>필요한 재료</h3>
+        <div class="content-text">
+            {{ recipe.ingredients|linebreaks }}
+        </div>
+    </section>
+
+    <section class="recipe-section steps-box">
+        <h3>조리 순서</h3>
+        <div class="content-text cooking-steps">
+            {{ recipe.cooking_step|linebreaks }}
+        </div>
+    </section>
+
+    <div class="detail-actions">
+        <a href="{% url 'my_recipe:recipe_list' %}" class="btn-back">목록으로 돌아가기</a>
+    </div>
+</div>
+{% endblock %}

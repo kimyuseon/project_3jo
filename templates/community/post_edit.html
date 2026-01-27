@@ -1,0 +1,41 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static 'css/community.css' %}">
+</head>
+<body>
+    <div id="navbar">
+        <span>커뮤니티 : <b>글 수정</b></span>
+        <a href="{% url 'community:post_detail' post.id %}" class="btn">취소</a>
+    </div>
+
+    <div id="post-detail">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>제목</label>
+                <input name="title" type="text" value="{{ post.title }}">
+            </div>
+
+            <div class="form-group">
+                <label>내용</label>
+                <textarea name="content">{{ post.content }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>썸네일 변경</label>
+                {% if post.thumbnail %}
+                    <p style="font-size: 0.8em; color: #888;">현재 파일: {{ post.thumbnail.name }}</p>
+                {% endif %}
+                <input name="thumbnail" type="file">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">수정 완료</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

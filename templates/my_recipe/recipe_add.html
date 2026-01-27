@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="recipe-form-container">
+    <div class="form-header">
+        <h2 class="form-title">새 레시피 등록하기</h2>
+        <p class="form-subtitle">나의 요리 레시피를 공유해주세요.</p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="recipe-form">
+        {% csrf_token %}
+        
+        <div class="form-fields">
+            {% for field in form %}
+            <div class="field-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                
+                {{ field }}
+                
+                {% if field.help_text %}
+                    <small class="help-text">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="field-errors" style="color: #dc3545; font-size: 0.85rem; margin-top: 5px;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">등록하기</button>
+            <a href="{% url 'my_recipe:recipe_list' %}" class="btn-cancel">취소</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
