@@ -31,7 +31,7 @@ def login_view(request): #로그인 기능
             auth_login(request, user)
             return redirect('index') 
         else:
-            return render(request, 'login.html', {'error': '로그인 실패'})
+            return render(request, 'community/login.html', {'error': '로그인 실패'})
     else:
         return render(request, 'community/login.html')
     
@@ -41,4 +41,4 @@ def logout_view(request): #로그아웃 기능
     return redirect('index') 
 
 def main_index(request):
-    return render(request, 'templates/index.html')
+    return render(request, 'index.html')
