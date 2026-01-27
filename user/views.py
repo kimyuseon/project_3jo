@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .forms import SignUpForm
 from .models import UserProfile
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.shortcuts import redirect
 
 
 def SignUp_view(request): #회원가입 기능
