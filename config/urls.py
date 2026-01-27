@@ -21,9 +21,10 @@ from django.conf import settings
 
 urlpatterns = [
     re_path('^admin/', admin.site.urls),
-    re_path('^community/', include("community.urls")),
-    re_path(r'^recipe/', include('my_recipe.urls')),
+    re_path('^', include("community.urls")),
+    re_path(r'^recipe/', include('my_recipe.urls', namespace='my_recipe')),
     re_path('^user/', include('user.urls')),
+    re_path(r'^fridge/', include('my_django.urls')),
 ]
 
 

@@ -1,18 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나만의 레시피 냉장고</title>
+    <link rel="stylesheet" href="{% static 'css/my_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/my_django.css' %}">
+</head>
 <body>
-    <nav>
-        <a href="{% url 'recipe:recipe_list' %}">레시피 보러가기</a> | 
-        <a href="{% url 'community:post_list' %}">커뮤니티 게시판</a>
+    <nav class="nav-bar">
+        <a href="/" class="active">🏠 홈</a> 
+        <a href="{% url 'my_django:fridge_main' %}">🧊 내 냉장고</a>
+        <a href="{% url 'my_recipe:recipe_list' %}">🍳 레시피</a>
+        <a href="{% url 'community:post_list' %}">👥 커뮤니티</a>
     </nav>
 
-    <hr>
+    <main class="main-container" style="text-align: center; padding: 50px 20px;">
+        <h1 class="main-title">{{ user.username|default:"우리" }}의 냉장고 재료로 요리를 해볼까요?</h1>
+        
+        <div style="margin-top: 30px;">
 
-    <h1>보유재료 기반으로 요리를 해볼까요?</h1>
-    
-    <section class="ingredient-section">
-        <h3>오늘 냉장고에 넣을 재료는?</h3>
-        <input type="text" placeholder="예: 양파">
-        <button type="button">추가하기</button>
-    </section>
 
-    <small>맛있게 드세요!</small>
+    </main>
 </body>
+</html>

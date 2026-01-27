@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{% static 'css/my_django.css' %}">
+</head>
+<body style="background: #fff;">
+    <div class="container">
+        <div style="display: flex; align-items: center; margin-bottom: 25px;">
+            <a href="{% url 'fridge_main' %}" style="text-decoration: none; font-size: 24px; color: #000; margin-right: 15px;">✕</a>
+            <h2 style="font-size: 20px; margin: 0; font-weight: 800;">재료 폴더 선택</h2>
+        </div>
+
+        <div class="category-tabs">
+            {% for category in sample_data.keys %}
+                <div class="tab-item {% if forloop.first %}active{% endif %}" onclick="openTab(event, 'tab-{{ forloop.counter }}')">
+                    {{ category }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% for category, items in sample_data.items %}
+            <div id="tab-{{ forloop.counter }}" class="tab-content {% if forloop.first %}active{% endif %}">
+                <div class="item-grid">
+                    {% for name in items %}
+                    <form method="post" style="margin: 0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="name" value="{{ name }}">
+                        <input type="hidden" name="category" value="{{ category }}">
+                        <button type="submit" class="item-button">
+                            <div class="image-box" style="margin-bottom: 5px;">
+                                <img src="{% static 'images/' %}{{ name }}.png" 
+                                     alt="{{ name }}" 
+                                     style="width: 45px; height: 45px; object-fit: contain;">
+                            </div>
+                            <span class="name" style="font-size: 11px; display: block;">{{ name }}</span>
+                        </button>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function openTab(evt, tabId) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
+            tablinks = document.getElementsByClassName("tab-item");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>

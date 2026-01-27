@@ -1,47 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; text-align: center; padding-top: 200px;">
-    <div style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #5e35b1; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 10px;"></div>
-    <p>AI 추천 레시피를 생성 중입니다. 잠시만 기다려 주세요.</p>
+<div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); z-index: 9999; text-align: center; padding-top: 200px;">
+    <div class="spinner" style="width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #ff6b6b; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+    <p style="font-weight: bold; color: #333;">AI가 최적의 레시피를 조합 중입니다...</p>
 </div>
 
-<style>
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-</style>
-
 <div class="recipe-grid-container">
-    <div class="header-section" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
-        <h2 style="margin: 0;">나만의 레시피 목록</h2>
+    <div class="header-section" style="margin: 20px 0 30px;">
+        <h1 style="font-size: 24px; margin-bottom: 20px;">🍳 추천 레시피</h1>
         
-        <form action="{% url 'my_recipe:recipe_list' %}" method="GET" class="search-form" style="display: flex; gap: 10px; margin: 0;">
-            <input type="text" name="q" value="{{ search_query }}" placeholder="재료나 요리명 입력" style="width: 250px; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
-            <button type="submit" class="btn-search">검색</button>
-            
-            <button type="submit" name="recommend" value="true" class="btn-ai" onclick="document.getElementById('loading-overlay').style.display='block';">AI 추천</button>
+        <form action="{% url 'my_recipe:recipe_list' %}" method="GET" class="search-form" style="display: flex; gap: 8px;">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="재료나 요리명 입력" 
+                   style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #eee; font-size: 14px;">
+            <button type="submit" class="btn-search" style="padding: 0 15px; background: #eee; border: none; border-radius: 10px; font-weight: bold;">검색</button>
+            <button type="submit" name="recommend" value="true" class="btn-ai" 
+                    style="padding: 0 15px; background: #5e35b1; color: white; border: none; border-radius: 10px; font-weight: bold;"
+                    onclick="document.getElementById('loading-overlay').style.display='block';">AI 추천</button>
         </form>
     </div>
 
     {% if ai_recommendation %}
-    <div class="ai-box" style="background: #f3f0ff; border: 1px solid #d1c4e9; padding: 25px; border-radius: 15px; margin-bottom: 30px;">
-        <h3 style="color: #5e35b1; margin-top: 0;">AI 추천 레시피</h3>
-        <div style="white-space: pre-wrap; line-height: 1.7;">{{ ai_recommendation }}</div>
+    <div class="ai-box" style="background: #f3f0ff; border: 1px solid #d1c4e9; padding: 20px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(94, 53, 177, 0.1);">
+        <h3 style="color: #5e35b1; margin-top: 0; display: flex; align-items: center; gap: 5px;">✨ AI 맞춤 제안</h3>
+        <div style="white-space: pre-wrap; line-height: 1.6; font-size: 14px; color: #444;">{{ ai_recommendation }}</div>
     </div>
     {% endif %}
 
-    <div class="recipe-grid">
-        {% for recipe in recipes %}
-        <div class="recipe-card">
-            {% if recipe.image %}
-                <img src="{{ recipe.image.url }}" class="recipe-img">
+    <div class="grid"> {% for recipe in recipes %}
+        <div class="card"> {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+            {% else %}
+                <div style="width: 100%; height: 120px; background: #f8f9fa; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #ccc;">No Image</div>
             {% endif %}
-            <div class="card-body">
-                <h3>{{ recipe.title }}</h3>
-                <p>{{ recipe.description|truncatechars:50 }}</p>
-                <div class="card-footer">
-                    <span class="difficulty-badge">{{ recipe.difficulty }}</span>
-                    <a href="{% url 'my_recipe:recipe_detail' recipe.pk %}" style="text-decoration: none; color: #28a745; font-weight: bold;">보기</a>
-                </div>
+            
+            <h3 style="font-size: 16px; margin: 10px 0 5px; text-align: left;">{{ recipe.title }}</h3>
+            <p style="font-size: 12px; color: #888; text-align: left; margin-bottom: 15px;">{{ recipe.description|truncatechars:30 }}</p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11px; background: #e8f5e9; color: #2e7d32; padding: 3px 8px; border-radius: 5px;">{{ recipe.difficulty }}</span>
+                <a href="{% url 'my_recipe:recipe_detail' recipe.pk %}" style="text-decoration: none; color: #ff6b6b; font-weight: bold; font-size: 14px;">레시피 보기</a>
             </div>
         </div>
         {% empty %}
@@ -49,4 +47,8 @@
         {% endfor %}
     </div>
 </div>
+
+<style>
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
 {% endblock %}

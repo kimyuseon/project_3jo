@@ -1,47 +1,48 @@
-/* 1. 기본 폰트 및 배경 설정 */
-body {
+/* static/css/style.css */
+body, html {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-    background-color: #fdfdfd; /* 아주 연한 회색으로 고급스럽게 */
+    font-family: 'Pretendard', sans-serif;
+    background-color: #fcfcfc;
+}
+
+nav {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: flex-end;
+    padding: 20px 40px;
+    background: transparent;
+}
+
+nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    margin-left: 20px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #00b894;
+}
+
+.main-container {
+    display: flex;
     justify-content: center;
-    height: 100vh; /* 화면 꽉 차게 중앙 정렬 */
-    color: #333;
+    align-items: center;
+    height: 70vh; /* 화면 높이의 70% 정도를 차지하게 해서 중앙에 배치 */
+}
+
+.main-title {
+    font-size: 3rem;
+    color: #2d3436;
     text-align: center;
-}
-
-/* 2. 제목 스타일링 */
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #2D3436; /* 짙은 차콜색 */
+    font-weight: 800;
     letter-spacing: -1px;
+    /* 은은한 애니메이션 효과 */
+    animation: fadeIn 1.2s ease-in-out;
 }
 
-/* 3. 보조 텍스트 (small) 스타일링 */
-small {
-    font-size: 1.1rem;
-    color: #FF7675; /* 식욕을 돋우는 산호색/연한 빨강 */
-    font-weight: 600;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 30px;
-    animation: bounce 2s infinite; /* 통통 튀는 애니메이션 */
-}
-
-/* 4. 부드러운 박스 디자인 (나중에 내용을 넣으실 걸 대비해서!) */
-body::before {
-    content: "🍳";
-    font-size: 5rem;
-    margin-bottom: 20px;
-}
-
-/* 5. 애니메이션 정의 */
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-10px);}
-    60% {transform: translateY(-5px);}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
