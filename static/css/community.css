@@ -147,3 +147,56 @@ body {
     gap: 10px;
     margin-top: 30px;
 }
+/* community_list.css */
+
+#full-width-wrapper {
+    width: 100vw;       
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #f8f9fa; 
+    padding: 40px 0;    
+}
+
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px;
+    width: 96%;
+    margin: 0 auto;
+}
+
+.post-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+.post-card-image-wrapper {
+    width: 100%; 
+    aspect-ratio: 16 / 10; 
+    background: #eee;
+}
+
+.post-card-body {
+    padding: 25px;
+}
+
+.btn-add-post {
+    background: #ff6b6b; 
+    color: white; 
+    text-decoration: none; 
+    padding: 12px 25px; 
+    border-radius: 35px; 
+    font-weight: bold; 
+    font-size: 16px;
+}
