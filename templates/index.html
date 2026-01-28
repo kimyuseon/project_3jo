@@ -10,18 +10,29 @@
 </head>
 <body>
     <nav class="nav-bar">
-        <a href="/" class="active">홈 스윗 홈</a> 
+        <a href="{% url 'user:index' %}" class="active">홈 스윗 홈</a> 
         <a href="{% url 'my_django:fridge_main' %}">나의 냉장고</a>
         <a href="{% url 'my_recipe:recipe_list' %}">나만의 레시피</a>
         <a href="{% url 'community:post_list' %}">커뮤니티 게시판</a>
     </nav>
 
     <main class="main-container" style="text-align: center; padding: 50px 20px;">
-        <h1 class="main-title">나의 냉장고 재료로 요리를 해볼까요?</h1>
+        <h1 class="main-title">오늘 해먹을거 5만가지 정도는 있어요</h1>
         
         <div style="margin-top: 30px;">
-
-
+            {% if user.is_authenticated %}
+                <div class="user-info">
+                    <p><strong>{{ user.username }}</strong>님, 요리할 준비 되셨나요?</p>
+                    <a href="{% url 'user:logout' %}" style="color: red; text-decoration: none; border: 1px solid red; padding: 5px 10px; border-radius: 5px;">로그아웃</a>
+                </div>
+            {% else %}
+                <div class="auth-buttons">
+                    <p>로그인하고 나만의 냉장고를 관리해보세요!</p>
+                    <a href="{% url 'user:login' %}" style="margin-right: 15px; text-decoration: none; color: blue;">로그인</a>
+                    <a href="{% url 'user:signup' %}" style="text-decoration: none; color: blue;">회원가입</a>
+                </div>
+            {% endif %}
+        </div>
     </main>
 </body>
 </html>
