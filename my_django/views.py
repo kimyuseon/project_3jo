@@ -53,14 +53,16 @@ def add_ingredient(request):
             
     return redirect('my_django:fridge_main')
 
-# 4. 유통기한 날짜 및 정보 수정
+# 4. 유통기한 날짜 수정
 def update_expiry(request, pk):
     item = get_object_or_404(Ingredient, pk=pk)
+    
     if request.method == "POST":
-        # 기존 데이터를 폼에 넣고 수정된 내용만 반영
-        form = IngredientForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
+        new_expiry = request.POST.get('expiry_date')
+        
+        if new_expiry:
+            item.expiry_date = new_expiry
+            item.save()
             
     return redirect('my_django:fridge_main')
 
