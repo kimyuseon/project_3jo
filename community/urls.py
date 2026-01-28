@@ -11,5 +11,5 @@ urlpatterns = [
     re_path("^posts/add/$", views.post_add, name="post_add"), #게시글 작성
     re_path(r"^posts/(?P<post_id>\d+)/delete/$", views.post_delete, name="post_delete"), #삭제
     re_path(r'^posts/(?P<post_id>\d+)/edit/$', views.post_edit, name='post_edit'), #수정
-
+    re_path(r"^(?P<post_id>\d+)/like/$", views.post_like, name="post_like"),
 ]

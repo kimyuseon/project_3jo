@@ -79,7 +79,10 @@
                         
                         <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f1f1f1; display: flex; justify-content: space-between; font-size: 13px; color: #999;">
                             <span>{{ post.author.username|default:"익명" }}</span>
-                            <span style="color: #ff6b6b; font-weight: bold;">{{ post.comment_set.count }}</span>
+                            <div style="display: flex; gap: 12px;">
+                                <span style="color: #ff6b6b; font-weight: bold;">❤️ {{ post.total_likes }}</span>
+                                <span style="color: #4dabf7; font-weight: bold;">💬 {{ post.comment_set.count }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
