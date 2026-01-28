@@ -8,7 +8,7 @@ from django.contrib.auth import logout as auth_logout
 from django.shortcuts import redirect
 
 
-def SignUp_view(request): #회원가입 기능
+def signup_view(request): #회원가입 기능
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -16,7 +16,7 @@ def SignUp_view(request): #회원가입 기능
             user.set_password(form.cleaned_data['password'])
             user.save()
             UserProfile.objects.create(user=user)
-            return redirect('login')
+            return redirect('user:login')
     else:
         form = SignUpForm()
     
@@ -30,16 +30,16 @@ def login_view(request): #로그인 기능
         user = authenticate(request, username=u_id, password=u_pw)
         if user is not None:
             auth_login(request, user)
-            return redirect('index') 
+            return redirect('user:index') 
         else:
-            return render(request, 'community/login.html', {'error': '로그인 실패'})
+            return render(request, 'user/login.html', {'error': '로그인 실패'})
     else:
-        return render(request, 'community/login.html')
+        return render(request, 'user/login.html')
     
 
 def logout_view(request): #로그아웃 기능
     auth_logout(request)
-    return redirect('index') 
+    return redirect('user:index') 
 
 def main_index(request):
     return render(request, 'index.html')

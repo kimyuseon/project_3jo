@@ -1,0 +1,99 @@
+/* 로그인/회원가입 전체 컨테이너 */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* 화면 중앙 배치를 위해 */
+    background-color: #fcfcfc;
+}
+
+/* 카드형 레이아웃 박스 */
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+    width: 100%;
+    max-width: 400px; /* 너무 넓어지지 않게 고정 */
+    text-align: center;
+}
+
+/* 제목 (로그인/회원가입) */
+.auth-card h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2d3436;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+}
+
+/* 입력 칸 세트 (label + input) */
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #636e72;
+    font-size: 0.95rem;
+}
+
+/* input 태그 스타일링 */
+.auth-card input[type="text"],
+.auth-card input[type="password"],
+.auth-card input[type="email"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    box-sizing: border-box; /* 패딩 때문에 박스가 안 삐져나가게 함 */
+}
+
+/* 입력 칸 클릭 시 효과 */
+.auth-card input:focus {
+    border-color: #00b894;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 184, 148, 0.1);
+}
+
+/* 제출 버튼 */
+.btn-auth {
+    width: 100%;
+    padding: 15px;
+    background-color: #00b894;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.btn-auth:hover {
+    background-color: #00a887;
+}
+
+/* 가입하기 <-> 로그인 이동 링크 */
+.auth-footer {
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: #b2bec3;
+}
+
+.auth-footer a {
+    color: #00b894;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}

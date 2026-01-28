@@ -1,11 +1,13 @@
-/* static/css/style.css */
+/* 기본 설정 */
 body, html {
     height: 100%;
     margin: 0;
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
     background-color: #fcfcfc;
+    color: #2d3436;
 }
 
+/* 내비게이션 바 */
 nav {
     display: flex;
     justify-content: flex-end;
@@ -25,140 +27,89 @@ nav a:hover {
     color: #00b894;
 }
 
+/* 메인 대문 섹션 */
 .main-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 70vh; /* 화면 높이의 70% 정도를 차지하게 해서 중앙에 배치 */
+    justify-content: center;
+    height: 75vh; /* 화면의 더 넓은 공간을 차지하도록 다시 키움 */
+    text-align: center;
+    padding: 0 20px;
 }
 
+/* 제목: 다시 3rem으로 큼직하게! */
 .main-title {
-    font-size: 3rem;
+    font-size: 3rem;     /* 유선님이 좋아하셨던 원래 크기 */
     color: #2d3436;
-    text-align: center;
     font-weight: 800;
     letter-spacing: -1px;
-    /* 은은한 애니메이션 효과 */
+    margin-bottom: 10px; /* 큰 글씨에 맞춰 간격도 살짝 조절 */
     animation: fadeIn 1.2s ease-in-out;
 }
 
+/* 유저 정보 및 안내 문구: 이것도 확 키웠어요! */
+.user-info p, .auth-buttons p {
+    font-size: 1.5rem;   /* 일반 글씨보다 훨씬 큰 1.5rem으로 변경 */
+    font-weight: 600;    /* 무게감도 더해서 잘 보이게 함 */
+    color: #444;         /* 제목과 조화를 이루는 진한 회색 */
+    margin: 0 0 30px 0;  /* 아래 버튼과는 여유 있게 뗌 */
+}
+
+/* 로그아웃 및 로그인 버튼: 문구가 커졌으니 버튼도 같이 키움 */
+.btn-logout, .auth-buttons a {
+    text-decoration: none;
+    font-size: 1.1rem;   /* 버튼 글씨도 시원하게 키움 */
+    font-weight: 600;
+    padding: 12px 28px;  /* 버튼 크기 자체를 큼직하게 변경 */
+    border-radius: 30px;
+    transition: all 0.2s;
+    display: inline-block;
+}
+
+/* 로그아웃 버튼 */
+.btn-logout {
+    color: #ff7675;
+    border: 2px solid #ff7675; /* 테두리도 좀 더 두껍게 */
+}
+
+.btn-logout:hover {
+    background-color: #ff7675;
+    color: white !important;
+}
+
+/* 로그인/회원가입 링크 */
+.auth-buttons a {
+    color: #00b894;
+    border: 2px solid #00b894;
+    margin: 0 8px;
+}
+
+.auth-buttons a:hover {
+    background-color: #00b894;
+    color: white !important;
+}
+
+/* 애니메이션 효과 */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 재료 선택 페이지 전용 스타일 */
-.select-page-body {
-    background-color: #ffffff;
-    margin: 0;
-}
-
-.select-container {
-    padding: 20px;
-}
-
-.select-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.close-x {
-    text-decoration: none;
-    font-size: 28px;
-    color: #000;
-    margin-right: 15px;
-    font-weight: 300;
-}
-
-.page-title {
-    font-size: 22px;
-    margin: 0;
-    font-weight: 800;
-}
-
-/* 카테고리 탭 (가로 스크롤 가능) */
-.category-tabs {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    white-space: nowrap;
-    margin-bottom: 25px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #f0f0f0;
-    -ms-overflow-style: none; /* IE/Edge 스크롤바 숨기기 */
-    scrollbar-width: none;  /* Firefox 스크롤바 숨기기 */
-}
-
-.category-tabs::-webkit-scrollbar { display: none; } /* Chrome 스크롤바 숨기기 */
-
-.tab-item {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: #999;
-    padding: 10px 5px;
-    cursor: pointer;
-    font-weight: 600;
-    position: relative;
-}
-
-.tab-item.active {
-    color: #000;
-}
-
-.tab-item.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: #000;
-}
-
-/* 재료 그리드 */
-.tab-panel {
-    display: none;
-}
-
-.tab-panel.active {
-    display: block;
-}
-
-.ingredient-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
-}
-
-.ingredient-card {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-    position: relative;
-    border: 1px solid #eee;
-}
-
-.ingredient-name {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.btn-add-item {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #000;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* --- 재료 선택 페이지 등 기타 스타일 유지 --- */
+.select-page-body { background-color: #ffffff; margin: 0; }
+.select-container { padding: 20px; }
+.select-header { display: flex; align-items: center; margin-bottom: 25px; }
+.close-x { text-decoration: none; font-size: 28px; color: #000; margin-right: 15px; font-weight: 300; }
+.page-title { font-size: 22px; margin: 0; font-weight: 800; }
+.category-tabs { display: flex; gap: 15px; overflow-x: auto; white-space: nowrap; margin-bottom: 25px; padding-bottom: 5px; border-bottom: 1px solid #f0f0f0; scrollbar-width: none; }
+.category-tabs::-webkit-scrollbar { display: none; }
+.tab-item { background: none; border: none; font-size: 16px; color: #999; padding: 10px 5px; cursor: pointer; font-weight: 600; position: relative; }
+.tab-item.active { color: #000; }
+.tab-item.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 3px; background-color: #000; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.ingredient-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+.ingredient-card { background: #f8f9fa; border-radius: 12px; padding: 15px; text-align: center; position: relative; border: 1px solid #eee; }
+.ingredient-name { font-size: 14px; font-weight: 500; }
+.btn-add-item { position: absolute; top: 5px; right: 5px; background: #000; color: #fff; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
