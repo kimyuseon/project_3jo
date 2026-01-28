@@ -39,6 +39,20 @@
             {{ post.content|linebreaksbr }}
         </div>
 
+        <div style="display: flex; justify-content: flex-end; margin: 20px 0;">
+            <form action="{% url 'community:post_like' post.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" style="background: white; border: 1px solid #ff6b6b; color: #ff6b6b; padding: 8px 18px; border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;">
+                    {% if request.user in post.likes.all %}
+                        <span style="font-size: 16px;">❤️</span> 좋아요 취소
+                    {% else %}
+                        <span style="font-size: 16px;">🤍</span> 좋아요
+                    {% endif %}
+                    <span style="border-left: 1px solid #ff6b6b; padding-left: 8px; font-size: 15px;">{{ post.total_likes }}</span>
+                </button>
+            </form>
+        </div>
+
         <hr>
 
         <h3>댓글 ({{ post.comment_set.count }})</h3>

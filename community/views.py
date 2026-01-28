@@ -84,3 +84,15 @@ def post_delete(request, post_id):
 
 def login_view(request): 
     return render(request, 'community/login.html')
+
+#좋아요 기능
+@login_required
+def post_like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)    
+        
+    return redirect('community:post_detail', post_id=post_id)
