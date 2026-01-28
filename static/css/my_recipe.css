@@ -227,3 +227,81 @@ nav {
 .btn-back:hover {
     background: #555;
 }
+
+/* 수정 페이지 전용 추가 스타일 */
+.edit-form-box {
+    background: #f9f9f9;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.edit-field {
+    margin-bottom: 20px;
+}
+
+.edit-field label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+/* 하단 버튼 3형제 */
+.action-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-list { background-color: #3498db; color: white; } /* 파랑 */
+.btn-save { background-color: #f1c40f; color: black; } /* 노랑 */
+.btn-cancel { background-color: #333; color: white; }  /* 검정 */
+
+.btn-common {
+    flex: 1;
+    max-width: 150px;
+    padding: 12px;
+    text-align: center;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* 입력창(input)과 텍스트영역(textarea) 성형수술 */
+.edit-field input[type="text"], 
+.edit-field input[type="number"], 
+.edit-field select, 
+.edit-field textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 10px; /* 모서리를 둥글게 */
+    background-color: #fff;
+    font-size: 15px;
+    box-sizing: border-box; /* 패딩이 너비를 넘지 않게 */
+    transition: border-color 0.2s;
+}
+
+/* 마우스를 클릭했을 때(Focus) 효과 */
+.edit-field input:focus, 
+.edit-field textarea:focus {
+    outline: none;
+    border-color: #3498db; /* 강조색을 파란색으로 */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+/* 이미지 업로드 필드 정렬 */
+.edit-field input[type="file"] {
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+/* 텍스트 입력창 높이 조절 */
+.edit-field textarea {
+    height: 180px;
+    resize: vertical; /* 사용자가 높이 조절 가능 */
+}

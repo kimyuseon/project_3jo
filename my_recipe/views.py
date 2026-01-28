@@ -1,9 +1,10 @@
 import google.generativeai as genai
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .forms import RecipeForm
 from .models import Recipe
 from django.conf import settings
+
 
 #목록
 def recipe_list(request):
@@ -43,7 +44,9 @@ def recipe_add(request):
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            recipe = form.save(commit=False)
+            recipe.user = request.user
+            recipe.save()
             return redirect('my_recipe:recipe_list')
     else:
         form = RecipeForm()
@@ -57,10 +60,45 @@ def recipe_detail(request, pk):
         return redirect('my_recipe:recipe_list')
     return render(request, 'my_recipe/recipe_detail.html', {'recipe': recipe})
 
-#수정
+# 수정
 def recipe_edit(request, pk):
-    pass
+    recipe = get_object_or_404(Recipe, pk=pk)
 
-#삭제
+    if recipe.user != request.user:
+        return redirect('my_recipe:recipe_detail', pk=pk)
+
+    if request.method == "POST":
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+        if form.is_valid():
+            form.save()
+            return redirect('my_recipe:recipe_detail', pk=pk)
+    else:
+        form = RecipeForm(instance=recipe)
+    return render(request, 'my_recipe/recipe_edit.html', {'form': form, 'recipe': recipe})
+
+# 삭제
 def recipe_delete(request, pk):
-    pass
+    recipe = get_object_or_404(Recipe, pk=pk)
+    
+    
+    if recipe.user == request.user:
+        recipe.delete()
+    
+    return redirect('my_recipe:recipe_list')
+
+#익명글 삭제할 때 사용
+# def recipe_delete(request, pk):
+#     recipe = get_object_or_404(Recipe, pk=pk)
+    
+#     if request.method == "POST":
+#         try:
+#             if recipe.user == request.user:
+#                 recipe.delete()
+#             else:
+#                 return redirect('my_recipe:recipe_detail', pk=pk)
+#         except:
+#             recipe.delete()
+            
+#         return redirect('my_recipe:recipe_list')
+    
+#     return redirect('my_recipe:recipe_detail', pk=pk)
