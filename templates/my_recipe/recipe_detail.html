@@ -48,7 +48,7 @@
                 
                 <form action="{% url 'my_recipe:recipe_delete' recipe.pk %}" method="post" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn-delete" onclick="return confirm('정말 삭제하시겠습니까? (⁼̴̤̆◡̶͂⁼̴̤̆ )');" style="padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">삭제하기</button>
+                    <button type="submit" class="btn-delete" onclick="return confirm('정말 삭제하시겠습니까?');" style="padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">삭제하기</button>
                 </form>
             </div>
         {% endif %}
