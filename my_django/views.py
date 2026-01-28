@@ -39,13 +39,19 @@ def add_ingredient(request):
 
 # 4. 유통기한 날짜 수정
 def update_expiry(request, pk):
+    item = get_object_or_404(Ingredient, pk=pk)
+    
+    if item.user != request.user:
+        return redirect('my_django:fridge_main')
+    
     if request.method == "POST":
-        item = get_object_or_404(Ingredient, pk=pk)
-        expiry_date = request.POST.get('expiry_date')
-        if expiry_date:
-            item.expiry_date = expiry_date
+        new_expiry = request.POST.get('expiry_date')
+        
+        if new_expiry:
+            item.expiry_date = new_expiry
             item.save()
-    return redirect('my_django:fridge_main')
+            
+    return redirect('my_django:fridge_main') 
 
 # 5. 재료 삭제
 def delete_ingredient(request, pk):
