@@ -13,6 +13,7 @@ class Ingredient(models.Model):
     ]
     name = models.CharField(max_length=50)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='채소')
+    quantity = models.IntegerField(default=1)
     expiry_date = models.DateField(null=True, blank=True)
     added_at = models.DateTimeField(auto_now_add=True)
 
