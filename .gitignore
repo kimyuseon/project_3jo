@@ -1,7 +1,8 @@
 # 가상환경 폴더 (팀원들과 공유하지 않음)
 my_env/
 venv/
-env/
+.env
+media/
 
 # 파이썬 실행 시 생성되는 캐시 파일
 __pycache__/

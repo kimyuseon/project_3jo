@@ -11,10 +11,27 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+env = environ.Env(DEBUG=(bool, False))
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# env_file = os.path.join(BASE_DIR, ".env")
+# if os.path.exists(env_file):
+#     environ.Env.read_env(env_file)
+# else:
+#     print("⚠️ .env 파일을 찾을 수 없습니다! 위치를 확인하세요.")
+
+
+GEMINI_API_KEY = env('GEMINI_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
