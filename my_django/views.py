@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
+# from django.contrib.auth.decorators import login_required
+# from .models import Ingredient
+# from .forms import IngredientForm 
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
@@ -56,14 +59,16 @@ def update_expiry(request, pk):
         if new_expiry:
             item.expiry_date = new_expiry
             item.save()
+            
     return redirect('my_django:fridge_main')
 
-@login_required
-def delete_ingredient(request, pk):
-    item = get_object_or_404(Ingredient, pk=pk, user=request.user)
-    if request.method == "POST":
-        item.delete()
-    return redirect('my_django:fridge_main')
+# # 5. 재료 삭제 - 로그인 필요
+# @login_required
+# def delete_ingredient(request, pk):
+#     item = get_object_or_404(Ingredient, pk=pk, user=request.user)
+#     if request.method == "POST":
+#         item.delete()
+#     return redirect('my_django:fridge_main')
 
 @login_required
 def upload_receipt(request):
@@ -88,3 +93,7 @@ def upload_receipt(request):
             return redirect('my_django:fridge_main')
             
     return render(request, 'index.html')
+    #     # 본인의 재료만 삭제 가능
+    #     item = get_object_or_404(Ingredient, pk=pk, user=request.user)
+    #     item.delete()
+    # return redirect('my_django:fridge_main')

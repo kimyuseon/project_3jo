@@ -67,6 +67,7 @@
                     <div class="ingredient-grid">
                         {% for item in items %}
                             <div class="card" style="padding-bottom: 15px;"> 
+                            <!-- <div class="card">  -->
                                 <form action="{% url 'my_django:add_ingredient' %}" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="name" value="{{ item.name }}">
@@ -91,6 +92,21 @@
                                     </div>
                                     
                                     <button type="submit" class="submit-add-btn">추가하기</button>
+                                    <!-- <span class="ingredient-name" style="display: block; margin: 5px 0; font-size: 14px; font-weight: bold;">{{ item }}</span>
+                                    
+                                    <div class="input-group" style="margin-bottom: 10px;">
+                                        <input type="number" name="quantity" value="1" min="1" 
+                                               style="width: 40px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; text-align: center;">
+                                        <span style="font-size: 11px;">개</span>
+                                    </div>
+                                    
+                                    <input type="date" name="expiry_date" 
+                                           style="width: 90%; font-size: 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 5px;">
+
+                                    <button type="submit" class="add-badge" 
+                                            style="background: #ff6b6b; color: white; border: none; border-radius: 20px; width: 80%; height: 25px; cursor: pointer; font-size: 12px;">
+                                        추가 +
+                                    </button> -->
                                 </form>
                             </div>
                         {% endfor %}
@@ -132,6 +148,13 @@
                     this.src = defaultImage;
                 });
             });
+        // // 오늘 날짜를 기본값으로 설정하는 스크립트 (선택사항)
+        // document.querySelectorAll('input[type="date"]').forEach(el => {
+        //     if(!el.value) {
+        //         const today = new Date();
+        //         today.setDate(today.getDate() + 7); // 기본 7일 뒤로 설정
+        //         el.value = today.toISOString().substr(0, 10);
+        //     }
         });
     </script>
 </body>

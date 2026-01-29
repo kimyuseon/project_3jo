@@ -5,6 +5,7 @@ class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         fields = ['master_ingredient', 'quantity', 'expiry_date']
+        # fields = ['name', 'category', 'quantity', 'expiry_date']
         widgets = {
             'expiry_date': forms.DateInput(attrs={'type': 'date'}),
         }

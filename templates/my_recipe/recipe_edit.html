@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/recipe_detail.css' %}">
+
+<div class="recipe-detail-container">
+    <h1 class="recipe-title">레시피 수정하기</h1>
+    <p class="recipe-meta">내용을 수정하고 완료 버튼을 눌러주세요.</p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="edit-form-box">
+            {% for field in form %}
+                <div class="edit-field">
+                    <label>{{ field.label }}</label>
+                    {{ field }} </div>
+            {% endfor %}
+        </div>
+
+        <div class="action-group">
+            <a href="{% url 'my_recipe:recipe_list' %}" class="btn-common btn-list">목록으로</a>
+            <button type="submit" class="btn-common btn-save">수정완료</button>
+            <a href="{% url 'my_recipe:recipe_detail' recipe.pk %}" class="btn-common btn-cancel">취소</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -3,6 +3,7 @@
 <html lang="ko">
 <head>
     <link rel="stylesheet" href="{% static 'css/community.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>{{ post.title }}</title>
 </head>
 <body>
@@ -16,7 +17,19 @@
         
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px;">
             <p style="color:#888; margin:0;">작성자: {{ post.author.username }} | {{ post.created_at|date:"Y-m-d H:i" }}</p>
-            <a href="{% url 'community:post_edit' post.id %}" class="btn" style="background:#f1f1f1; color:#333; font-size:0.85rem;">수정하기</a>
+            
+            {% if post.author == request.user %}
+            <div style="display: flex; gap: 8px;">
+                <a href="{% url 'community:post_edit' post.id %}" class="btn" style="background:#f1f1f1; color:#333; font-size:0.85rem; text-decoration:none; padding:5px 10px; border-radius:5px;">수정하기</a>
+                
+                <form action="{% url 'community:post_delete' post.id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn" 
+                            style="background:#ffebee; color:#c62828; font-size:0.85rem; border:none; cursor:pointer; padding:5px 10px; border-radius:5px;"
+                            onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
         
         {% if post.thumbnail %}
@@ -27,13 +40,25 @@
             {{ post.content|linebreaksbr }}
         </div>
 
+        <div style="display: flex; justify-content: flex-end; margin: 20px 0;">
+            <form action="{% url 'community:post_like' post.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" style="background: white; border: 1px solid #ff6b6b; color: #ff6b6b; padding: 8px 18px; border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.2s;">
+                    {% if request.user in post.likes.all %}
+                        <i class="fa-solid fa-heart" style="font-size: 18px;"></i> {% else %}
+                        <i class="fa-regular fa-heart" style="font-size: 18px;"></i> {% endif %}
+                    <span style="border-left: 1px solid #ff6b6b; padding-left: 10px; font-size: 16px;">{{ post.total_likes }}</span>
+                </button>
+            </form>
+        </div>
+
         <hr>
 
         <h3>댓글 ({{ post.comment_set.count }})</h3>
         <ul style="list-style:none; padding:0;">
             {% for comment in post.comment_set.all %}
                 <li style="border-bottom:1px solid #eee; padding:10px 0;">
-                    <strong>익명:</strong> {{ comment.content }}
+                    <strong>{{ comment.author.username }}:</strong> {{ comment.content }}
                 </li>
             {% empty %}
                 <li>첫 댓글을 남겨보세요!</li>
@@ -42,7 +67,7 @@
 
         <form method="POST" style="margin-top:20px;">
             {% csrf_token %}
-            <textarea name="comment" style="width:100%; height:80px; border-radius:10px; padding:10px; border:1px solid #ddd;"></textarea>
+            <textarea name="comment" placeholder="댓글을 입력해주세요." style="width:100%; height:80px; border-radius:10px; padding:10px; border:1px solid #ddd; box-sizing: border-box;"></textarea>
             <button type="submit" class="btn btn-primary" style="margin-top:10px;">댓글 등록</button>
         </form>
     </div>

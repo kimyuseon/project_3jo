@@ -30,3 +30,11 @@ class Ingredient(models.Model): #사용자 냉장고
             elif diff > 0: return f"D-{diff}"
             else: return "만료"
         return "기한미설정"
+    
+    def is_expiring_today(self):
+        """유통기한이 오늘이거나 지났는지 확인하는 메서드"""
+        if self.expiry_date:
+            today = date.today()
+            diff = (self.expiry_date - today).days
+            return diff <= 0 
+        return False

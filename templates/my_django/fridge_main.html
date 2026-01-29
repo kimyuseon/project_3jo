@@ -100,6 +100,19 @@
 
                             <span class="name">{{ item.master_ingredient.name }}</span>
                             <div class="d-day">{{ item.get_d_day }}</div>
+                                <!-- <img src="{% static 'images/' %}{{ item.name }}.png" 
+                                     alt="{{ item.name }}" 
+                                     style="width: 40px; height: 40px; object-fit: contain;">
+                            </div>
+
+                            <span class="name">
+                                {{ item.name }} 
+                                <small style="color: #888; font-size: 0.85em;">({{ item.quantity }})</small>
+                            </span>
+                            
+                            <div class="d-day {% if item.is_expiring_today %}expiring{% endif %}">
+                                {{ item.get_d_day }}
+                            </div> -->
                             
                             <form action="{% url 'my_django:update_expiry' item.pk %}" method="post">
                                 {% csrf_token %}
