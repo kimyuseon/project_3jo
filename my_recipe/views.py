@@ -6,32 +6,30 @@ from .forms import RecipeForm
 from .models import Recipe
 from django.conf import settings
 
-
 @login_required
 def recipe_list(request):
     search_query = request.GET.get('q', '')
     ai_recommendation = ""
     
-
     my_recipes = Recipe.objects.filter(user=request.user)
     
     if search_query:
-        recipes = my_recipes.filter(
-            Q(title__icontains=search_query) | Q(ingredients__icontains=search_query)
-        ).order_by('-id')
+        recipes = my_recipes.filter(Q(title__icontains=search_query) | Q(ingredients__icontains=search_query)).order_by('-id')
         
         if request.GET.get('recommend') == 'true' or '추천' in search_query:
             try:
                 genai.configure(api_key=settings.GEMINI_API_KEY)            
                 model = genai.GenerativeModel('gemini-2.5-flash')
-                
-                prompt = f"'{search_query}'와 관련된 요리 레시피를 제목, 재료, 요리 순서로 나누어 짧고 간결하게 한국어로 추천해줘."
-                
+                prompt = (
+                    f"사용자가 '{search_query}'와(과) 관련된 요리법을 알고 싶어해. "
+                    f"제목, 필요한 재료, 단계별 요리 순서로 나누어서 짧고 간결하게 한국어로 추천해줘.")
                 response = model.generate_content(prompt)
-                ai_recommendation = response.text
+                if response and response.text:
+                    ai_recommendation = response.text
                 
             except Exception as e:
-                print(f"AI error: {e}")
+                print(f"오류 원인: {e}")
+                ai_recommendation = "AI 추천을 가져오는 중에 문제가 생겼어요. 잠시 후 다시 시도해 주세요!"
 
     else:
         recipes = my_recipes.order_by('-id')
@@ -55,22 +53,16 @@ def recipe_add(request):
         form = RecipeForm()
     return render(request, 'my_recipe/recipe_add.html', {'form': form})
 
-
 @login_required
 def recipe_detail(request, pk):
-    try:
-        recipe = Recipe.objects.get(pk=pk)
-    except Recipe.DoesNotExist:
-        return redirect('my_recipe:recipe_list')
+    # 내 글이 아니면 자동으로 404 오류
+    recipe = get_object_or_404(Recipe, pk=pk, user=request.user)
     return render(request, 'my_recipe/recipe_detail.html', {'recipe': recipe})
-
 
 @login_required
 def recipe_edit(request, pk):
-    recipe = get_object_or_404(Recipe, pk=pk)
-
-    if recipe.user != request.user:
-        return redirect('my_recipe:recipe_detail', pk=pk)
+    # 수정 시에도 본인 확인 로직 강화
+    recipe = get_object_or_404(Recipe, pk=pk, user=request.user)
 
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES, instance=recipe)
@@ -81,29 +73,8 @@ def recipe_edit(request, pk):
         form = RecipeForm(instance=recipe)
     return render(request, 'my_recipe/recipe_edit.html', {'form': form, 'recipe': recipe})
 
-
 @login_required
 def recipe_delete(request, pk):
-    recipe = get_object_or_404(Recipe, pk=pk)
-    
-    if recipe.user == request.user:
-        recipe.delete()
-    
+    recipe = get_object_or_404(Recipe, pk=pk, user=request.user)
+    recipe.delete()
     return redirect('my_recipe:recipe_list')
-
-# 익명글 삭제할 때 사용
-# def recipe_delete(request, pk):
-#     recipe = get_object_or_404(Recipe, pk=pk)
-    
-#     if request.method == "POST":
-#         try:
-#             if recipe.user == request.user:
-#                 recipe.delete()
-#             else:
-#                 return redirect('my_recipe:recipe_detail', pk=pk)
-#         except:
-#             recipe.delete()
-            
-#         return redirect('my_recipe:recipe_list')
-    
-#     return redirect('my_recipe:recipe_detail', pk=pk)
