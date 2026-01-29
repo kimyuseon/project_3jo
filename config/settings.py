@@ -31,7 +31,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 #     print("⚠️ .env 파일을 찾을 수 없습니다! 위치를 확인하세요.")
 
 
-GEMINI_API_KEY = env('GEMINI_API_KEY')
+# GEMINI_API_KEY = env('GEMINI_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/

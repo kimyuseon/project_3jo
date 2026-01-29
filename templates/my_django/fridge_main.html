@@ -49,7 +49,9 @@
                                 <small style="color: #888; font-size: 0.85em;">({{ item.quantity }})</small>
                             </span>
                             
-                            <div class="d-day">{{ item.get_d_day }}</div>
+                            <div class="d-day {% if item.is_expiring_today %}expiring{% endif %}">
+                                {{ item.get_d_day }}
+                            </div>
                             
                             <form action="{% url 'my_django:update_expiry' item.pk %}" method="post">
                                 {% csrf_token %}
