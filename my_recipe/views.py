@@ -1,12 +1,13 @@
 import google.generativeai as genai
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm
 from .models import Recipe
 from django.conf import settings
 
 
-#목록
+@login_required
 def recipe_list(request):
     search_query = request.GET.get('q', '')
     ai_recommendation = ""
@@ -39,7 +40,8 @@ def recipe_list(request):
         'ai_recommendation': ai_recommendation
     })
 
-# 등록
+
+@login_required
 def recipe_add(request):
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
@@ -52,7 +54,8 @@ def recipe_add(request):
         form = RecipeForm()
     return render(request, 'my_recipe/recipe_add.html', {'form': form})
 
-#상세페이지
+
+@login_required
 def recipe_detail(request, pk):
     try:
         recipe = Recipe.objects.get(pk=pk)
@@ -60,7 +63,8 @@ def recipe_detail(request, pk):
         return redirect('my_recipe:recipe_list')
     return render(request, 'my_recipe/recipe_detail.html', {'recipe': recipe})
 
-# 수정
+
+@login_required
 def recipe_edit(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
 
@@ -76,17 +80,17 @@ def recipe_edit(request, pk):
         form = RecipeForm(instance=recipe)
     return render(request, 'my_recipe/recipe_edit.html', {'form': form, 'recipe': recipe})
 
-# 삭제
+
+@login_required
 def recipe_delete(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
-    
     
     if recipe.user == request.user:
         recipe.delete()
     
     return redirect('my_recipe:recipe_list')
 
-#익명글 삭제할 때 사용
+# 익명글 삭제할 때 사용
 # def recipe_delete(request, pk):
 #     recipe = get_object_or_404(Recipe, pk=pk)
     
