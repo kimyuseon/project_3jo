@@ -6,6 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/my_django.css' %}">
     <title>재료 선택</title>
+    <style>
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 20px;
+            margin: 5px auto;
+            width: fit-content;
+            padding: 2px 8px;
+        }
+        .qty-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 8px;
+        }
+        .qty-number {
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+        .submit-add-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 15px;
+            font-size: 12px;
+            margin-top: 8px;
+            cursor: pointer;
+            width: 80%;
+        }
+    </style>
 </head>
 <body class="select-page">
     <div class="container">
@@ -15,7 +53,7 @@
         </header>
 
         <div class="category-scroll-wrapper">
-            {% for category in sample_data.keys %}
+            {% for category in organized_data.keys %}
                 <div class="category-tab {% if forloop.first %}active{% endif %}" 
                      onclick="openTab(event, 'tab-{{ forloop.counter }}')">
                     {{ category }}
@@ -24,22 +62,35 @@
         </div>
 
         <div class="ingredient-content">
-            {% for category, items in sample_data.items %}
+            {% for category, items in organized_data.items %}
                 <div id="tab-{{ forloop.counter }}" class="ingredient-panel {% if forloop.first %}show{% endif %}">
                     <div class="ingredient-grid">
                         {% for item in items %}
-                            <div class="card"> <form action="{% url 'my_django:add_ingredient' %}" method="post">
+                            <div class="card" style="padding-bottom: 15px;"> 
+                                <form action="{% url 'my_django:add_ingredient' %}" method="post">
                                     {% csrf_token %}
-                                    <input type="hidden" name="name" value="{{ item }}">
+                                    <input type="hidden" name="name" value="{{ item.name }}">
                                     <input type="hidden" name="category" value="{{ category }}">
                                     
                                     <div class="image-box" style="height: 50px; display: flex; align-items: center; justify-content: center;">
-                                        <img src="{% static 'images/' %}{{ item }}.png" 
-                                             alt="{{ item }}" 
+                                        <img src="{% static 'images/' %}{{ item.name }}.png" 
+                                             alt="{{ item.name }}" 
+                                             class="ingredient-img"
                                              style="width: 45px; height: 45px; object-fit: contain;">
                                     </div>
-                                    <span class="ingredient-name" style="display: block; margin: 10px 0; font-size: 14px;">{{ item }}</span>
-                                    <button type="submit" class="add-badge" style="background: #ff6b6b; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer;">+</button>
+                                    
+                                    <span class="ingredient-name" style="display: block; margin: 8px 0; font-size: 14px;">
+                                        {{ item.name }}
+                                    </span>
+
+                                    <div class="quantity-selector">
+                                        <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">-</button>
+                                        <input type="hidden" name="quantity" value="1" class="qty-input">
+                                        <span class="qty-number">1</span>
+                                        <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+                                    </div>
+                                    
+                                    <button type="submit" class="submit-add-btn">추가하기</button>
                                 </form>
                             </div>
                         {% endfor %}
@@ -58,6 +109,30 @@
             document.getElementById(tabId).classList.add('show');
             evt.currentTarget.classList.add('active');
         }
+
+        function adjustQty(btn, change) {
+            const container = btn.parentElement;
+            const input = container.querySelector('.qty-input');
+            const display = container.querySelector('.qty-number');
+            
+            let currentVal = parseInt(input.value);
+            let newVal = currentVal + change;
+            
+            if (newVal < 1) newVal = 1; 
+            
+            input.value = newVal;
+            display.innerText = newVal;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.ingredient-img');
+            const defaultImage = "{% static 'images/default.png' %}";
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    this.src = defaultImage;
+                });
+            });
+        });
     </script>
 </body>
 </html>

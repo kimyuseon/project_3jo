@@ -1,55 +1,90 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Ingredient
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
+from .models import MasterIngredient, Ingredient
+from .services import extract_receipt_data_langchain
 
-# 1. 냉장고 메인 화면 (재료 목록 표시)
+@login_required
 def fridge_main(request):
-    # 카테고리별로 정렬하고, 최근 추가된 순서대로 가져옵니다.
-    ingredients = Ingredient.objects.all().order_by('category', '-added_at')
+    ingredients = Ingredient.objects.filter(user=request.user).order_by('master_ingredient__category', '-added_at')
     return render(request, 'my_django/fridge_main.html', {'ingredients': ingredients})
 
-# 2. 재료 선택 화면 (샘플 데이터 표시)
+@login_required
 def ingredient_select(request):
-    sample_data = {
-        '채소': ['브로콜리', '감자', '고추', '당근', '오이', '파', '파프리카', '토마토', '버섯', '무', '마늘', '양파', '애호박'],
-        '양념': ['와사비', '간장', '고추장', '된장', '마요네즈', '케첩'],
-        '해산물': ['게', '연어', '오징어', '참치', '새우'],
-        '육류': ['소고기', '돼지고기', '닭고기', '오리고기'],
-        '가공식품': ['두부', '베이컨', '소시지', '어묵', '햄'],
-        '과일': ['사과', '망고', '바나나', '아보카도', '레몬']
-    }
-    # 화면을 보여주는 역할만 수행합니다.
-    return render(request, 'my_django/ingredient_select.html', {'sample_data': sample_data})
+    masters = MasterIngredient.objects.all()
+    organized_data = {}
+    for item in masters:
+        if item.category not in organized_data:
+            organized_data[item.category] = []
+        organized_data[item.category].append(item)
+    
+    return render(request, 'my_django/ingredient_select.html', {'organized_data': organized_data})
 
-# 3. 실제 재료 추가 처리 (POST 요청 전용)
+from django.shortcuts import render, redirect
+from .models import MasterIngredient, Ingredient
+
+@login_required
 def add_ingredient(request):
     if request.method == "POST":
         name = request.POST.get('name')
-        category = request.POST.get('category')
+        quantity = int(request.POST.get('quantity', 1)) 
         
-        # 기본 유통기한을 오늘 기준 +7일로 설정하여 저장
-        Ingredient.objects.create(
-            name=name,
-            category=category,
-            expiry_date=timezone.now().date() + timedelta(days=7)
+        master_item = get_object_or_404(MasterIngredient, name=name)
+        
+        ingredient, created = Ingredient.objects.get_or_create(
+            user=request.user,
+            master_ingredient=master_item,
+            defaults={
+                'quantity': quantity,
+                'expiry_date': timezone.now().date() + timedelta(days=7)
+            }
         )
-    # 처리가 끝나면 메인 화면으로 리다이렉트
+        
+        if not created:
+            ingredient.quantity += quantity
+            ingredient.save()
+            
+        return redirect('my_django:fridge_main')
     return redirect('my_django:fridge_main')
 
-# 4. 유통기한 날짜 수정
+@login_required
 def update_expiry(request, pk):
+    item = get_object_or_404(Ingredient, pk=pk, user=request.user)
     if request.method == "POST":
-        item = get_object_or_404(Ingredient, pk=pk)
-        expiry_date = request.POST.get('expiry_date')
-        if expiry_date:
-            item.expiry_date = expiry_date
+        new_expiry = request.POST.get('expiry_date')
+        if new_expiry:
+            item.expiry_date = new_expiry
             item.save()
     return redirect('my_django:fridge_main')
 
-# 5. 재료 삭제
+@login_required
 def delete_ingredient(request, pk):
+    item = get_object_or_404(Ingredient, pk=pk, user=request.user)
     if request.method == "POST":
-        item = get_object_or_404(Ingredient, pk=pk)
         item.delete()
     return redirect('my_django:fridge_main')
+
+@login_required
+def upload_receipt(request):
+    if request.method == 'POST' and request.FILES.get('receipt_image'):
+        result = extract_receipt_data_langchain(request.FILES['receipt_image'])
+        
+        if result and 'items' in result:
+            for item in result['items']:
+                name = item.get('name')
+                count = item.get('count', 1)
+                master_item = MasterIngredient.objects.filter(name__icontains=name).first()
+
+                if master_item:
+                    user_ingredient, created = Ingredient.objects.get_or_create(
+                        user=request.user,
+                        master_ingredient=master_item,
+                        defaults={'quantity': count, 'expiry_date': timezone.now().date() + timedelta(days=7)}
+                    )
+                    if not created:
+                        user_ingredient.quantity += int(count)
+                        user_ingredient.save()
+            return redirect('my_django:fridge_main')
+            
+    return render(request, 'index.html')
