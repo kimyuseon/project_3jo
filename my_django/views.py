@@ -1,7 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-# from django.contrib.auth.decorators import login_required
-# from .models import Ingredient
-# from .forms import IngredientForm 
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
@@ -93,7 +90,3 @@ def upload_receipt(request):
             return redirect('my_django:fridge_main')
             
     return render(request, 'index.html')
-    #     # 본인의 재료만 삭제 가능
-    #     item = get_object_or_404(Ingredient, pk=pk, user=request.user)
-    #     item.delete()
-    # return redirect('my_django:fridge_main')
