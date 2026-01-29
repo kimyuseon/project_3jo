@@ -1,79 +1,43 @@
-/* 1. 기본 설정 */
+/* 1. 전체 공통 스타일 */
 body {
     font-family: 'Pretendard', -apple-system, sans-serif;
     background-color: #f8f9fa;
-    color: #333;
     margin: 0;
-    line-height: 1.6;
 }
 
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* 2. 네비게이션 바 */
-nav {
-    background-color: white;
-    border-bottom: 1px solid #eee;
-    padding: 15px 0;
-}
-
-.nav-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-
-/* 3. 레시피 목록 (그리드 레이아웃) */
-.recipe-grid-container {
+/* 2. 상세 페이지 & 등록/수정 폼 컨테이너 공통 */
+.recipe-detail-container, .recipe-form-container, .edit-form-box {
+    max-width: 700px;
     margin: 40px auto;
-}
-
-.recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-}
-
-/* 4. 등록 폼 디자인 */
-.recipe-form-container {
-    max-width: 650px;
-    margin: 50px auto;
-    padding: 40px;
+    padding: 35px;
     background: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-.form-header {
+/* 3. 🖼️ 이미지 크기 조절 */
+.recipe-image-wrapper {
+    width: 100%;
+    margin-bottom: 30px;
     text-align: center;
-    margin-bottom: 40px;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-.form-title {
-    font-size: 28px;
-    font-weight: 800;
-    color: #222;
-    margin-bottom: 10px;
+.recipe-detail-img {
+    max-width: 100%;
+    max-height: 450px;
+    height: auto;
+    object-fit: contain; /* 사진이 잘리지 않게 조정 */
+    border-radius: 15px;
 }
 
-.form-subtitle {
-    color: #888;
-    font-size: 15px;
-}
-
-/* 5. 입력 필드 그룹 */
-.field-group {
+/* 4. 입력 필드 디자인 (등록/수정 공통) */
+.field-group, .edit-field {
     margin-bottom: 25px;
 }
 
-.field-group label {
+.field-group label, .edit-field label {
     display: block;
     font-weight: 700;
     font-size: 14px;
@@ -81,227 +45,89 @@ nav {
     margin-bottom: 8px;
 }
 
-.field-group input, 
-.field-group textarea, 
-.field-group select {
+.field-group input, .field-group textarea, .field-group select,
+.edit-field input, .edit-field textarea, .edit-field select {
     width: 100%;
     padding: 13px 15px;
     border: 1px solid #e1e1e1;
     border-radius: 12px;
     font-size: 15px;
     background-color: #fafafa;
-    transition: all 0.2s;
     box-sizing: border-box;
+    transition: all 0.2s;
 }
 
-.field-group input:focus, 
-.field-group textarea:focus {
+.field-group input:focus, .edit-field input:focus {
     outline: none;
-    border-color: #000;
+    border-color: #333;
     background-color: #fff;
-}
-
-.field-group textarea {
-    height: 180px;
-    resize: none;
-}
-
-/* 6. 버튼 영역 (나란히 배치 핵심) */
-.form-actions {
-    display: flex;         /* 가로 정렬 */
-    justify-content: center; /* 가운데 모음 */
-    gap: 12px;            /* 버튼 사이 간격 */
-    margin-top: 40px;
-}
-
-/* 등록하기 버튼 (검정) */
-.btn-submit {
-    flex: 1;               /* 동일 비율 */
-    max-width: 180px;      /* 너무 커지지 않게 제한 */
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 16px;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;}
-
-    /* 전체 컨테이너 및 레이아웃 */
-.recipe-detail-container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #ffffff;
-    font-family: 'Pretendard', sans-serif;
-}
-
-.recipe-title {
-    font-size: 32px;
-    font-weight: 800;
-    margin-bottom: 15px;
-    text-align: center;
-    color: #222;
 }
 
 .recipe-meta {
-    text-align: center;
-    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 양 끝 정렬 */
+    margin-bottom: 35px;
+    padding: 10px 5px;
+    border-bottom: 1px solid #f1f1f1; /* 구분선 하나 넣어주면 더 깔끔해요 */
 }
 
-.difficulty-label {
-    font-size: 14px;
-    color: #888;
-}
-
-.difficulty-value {
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-weight: 700;
-    margin-left: 5px;
-}
-
-/* 🖼️ 이미지 크기 조절 핵심 */
-.recipe-image-wrapper {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 40px;
-    border-radius: 20px;
-    overflow: hidden;
-    background: #f9f9f9;
-}
-
-.recipe-detail-img {
-    max-width: 100%;    /* 부모 너비를 넘지 않음 */
-    max-height: 400px;  /* 💡 사진이 너무 크지 않게 높이 제한 */
-    height: auto;       /* 비율 유지 */
-    width: auto;
-    object-fit: contain;
-    border-radius: 20px;
-    display: block;
-    margin: 0 auto;
-}
-
-/* 섹션 공통 스타일 */
-.recipe-section {
-    margin-bottom: 40px;
-}
-
-.recipe-section h3 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 15px;
-    padding-left: 10px;
-    border-left: 4px solid #ff6b6b;
-}
-
-.content-text {
-    line-height: 1.8;
-    color: #555;
-    font-size: 16px;
-    padding: 10px;
-}
-
-/* 하단 버튼 */
-.detail-actions {
-    text-align: center;
-    margin-top: 60px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-}
-
-.btn-back {
-    display: inline-block;
-    padding: 14px 40px;
-    background: #333;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 12px;
+.author-name {
     font-weight: 600;
-    transition: background 0.2s;
-}
-
-.btn-back:hover {
-    background: #555;
-}
-
-/* 수정 페이지 전용 추가 스타일 */
-.edit-form-box {
-    background: #f9f9f9;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
-}
-
-.edit-field {
-    margin-bottom: 20px;
-}
-
-.edit-field label {
-    display: block;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-size: 15px;
     color: #444;
 }
 
-/* 하단 버튼 3형제 */
-.action-group {
+.difficulty-value {
+    padding: 8px 20px;
+    font-weight: 1000;
+    border-radius: 50px;
+    font-size: 17px;
+}
+
+
+.diff-easy { background: #ebfbee; color: #2b8a3e; }
+.diff-medium { background: #fff9db; color: #e67700; }
+.diff-hard { background: #fff5f5; color: #e03131; }
+
+/* 6. 🚀 모든 하단 버튼 정렬 (상세/등록/수정 공통) */
+.detail-actions, .form-actions, .action-group {
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.owner-actions {
+    display: flex;
     gap: 10px;
 }
 
-.btn-list { background-color: #3498db; color: white; } /* 파랑 */
-.btn-save { background-color: #f1c40f; color: black; } /* 노랑 */
-.btn-cancel { background-color: #333; color: white; }  /* 검정 */
-
-.btn-common {
-    flex: 1;
-    max-width: 150px;
-    padding: 12px;
-    text-align: center;
+/* 모든 버튼 공통 스타일 */
+.btn-back, .btn-edit, .btn-delete, .btn-submit, .btn-cancel, .btn-save, .btn-list {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 25px;
     border-radius: 12px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
     text-decoration: none;
     border: none;
     cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+    min-width: 100px;
 }
 
-/* 입력창(input)과 텍스트영역(textarea) 성형수술 */
-.edit-field input[type="text"], 
-.edit-field input[type="number"], 
-.edit-field select, 
-.edit-field textarea {
-    width: 100%;
-    padding: 12px 15px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 10px; /* 모서리를 둥글게 */
-    background-color: #fff;
-    font-size: 15px;
-    box-sizing: border-box; /* 패딩이 너비를 넘지 않게 */
-    transition: border-color 0.2s;
-}
+/* 버튼 색상 정의 */
+.btn-save, .btn-submit { background-color: #000 !important; color: #fff !important; }
+.btn-back, .btn-list, .btn-cancel { background-color: #e9ecef !important; color: #495057 !important; }
+.btn-edit { background-color: #ffc107 !important; color: #000 !important; }
+.btn-delete { background-color: #dc3545 !important; color: #fff !important; }
 
-/* 마우스를 클릭했을 때(Focus) 효과 */
-.edit-field input:focus, 
-.edit-field textarea:focus {
-    outline: none;
-    border-color: #3498db; /* 강조색을 파란색으로 */
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
-}
-
-/* 이미지 업로드 필드 정렬 */
-.edit-field input[type="file"] {
-    padding: 10px 0;
-    font-size: 14px;
-}
-
-/* 텍스트 입력창 높이 조절 */
-.edit-field textarea {
-    height: 180px;
-    resize: vertical; /* 사용자가 높이 조절 가능 */
-}
+.delete-form { margin: 0; }
