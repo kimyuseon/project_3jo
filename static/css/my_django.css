@@ -164,5 +164,10 @@ body {
     margin-top: 8px;
     color: #666;
     padding: 2px;
-} 
+}
 
+/* 유통기한 당일 빨간색 표시 */
+.d-day.expiring {
+    color: #ff4444;
+    font-weight: bold;
+}
