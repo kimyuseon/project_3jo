@@ -62,13 +62,13 @@ def update_expiry(request, pk):
             
     return redirect('my_django:fridge_main')
 
-# # 5. 재료 삭제 - 로그인 필요
-# @login_required
-# def delete_ingredient(request, pk):
-#     item = get_object_or_404(Ingredient, pk=pk, user=request.user)
-#     if request.method == "POST":
-#         item.delete()
-#     return redirect('my_django:fridge_main')
+# 5. 재료 삭제 - 로그인 필요
+@login_required
+def delete_ingredient(request, pk):
+    item = get_object_or_404(Ingredient, pk=pk, user=request.user)
+    if request.method == "POST":
+        item.delete()
+    return redirect('my_django:fridge_main')
 
 @login_required
 def upload_receipt(request):
