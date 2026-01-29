@@ -3,70 +3,44 @@
 <html lang="ko">
 <head>
     <link rel="stylesheet" href="{% static 'css/community.css' %}">
-    <title>{{ post.title }}</title>
+    <title>새 게시글 작성</title>
 </head>
 <body>
     <div id="navbar">
         <a href="{% url 'community:post_list' %}" style="text-decoration:none; color:#333;">← 목록으로</a>
-        <span>커뮤니티 : <b>상세보기</b></span>
+        <span>커뮤니티 : <b>새 글 쓰기</b></span>
     </div>
 
     <div id="post-detail" style="max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h1 style="font-size: 28px; margin-bottom: 10px;">{{ post.title }}</h1>
-        <p style="color: #888; font-size: 14px;">작성자: {{ post.author.username }} | {{ post.created_at|date:"Y-m-d H:i" }}</p>
+        <h1 style="font-size: 28px; margin-bottom: 20px;">새 게시글 작성하기</h1>
         
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">제목</label>
+                <input type="text" name="title" placeholder="제목을 입력해주세요" required
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+            </div>
 
-        {% if post.thumbnail %}
-            <img src="{{ post.thumbnail.url }}" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
-        {% endif %}
-        
-        <div style="font-size: 16px; line-height: 1.8; color: #333; min-height: 200px;">
-            {{ post.content|linebreaks }}
-        </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">대표 이미지</label>
+                <input type="file" name="thumbnail" accept="image/*"
+                       style="width: 100%; padding: 10px; background: #f9f9f9; border: 1px dashed #ccc; border-radius: 8px;">
+            </div>
 
-        <div style="text-align: center; margin: 40px 0;">
-            <form action="{% url 'community:post_like' post.id %}" method="POST" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="background: white; border: 2px solid #ff6b6b; color: #ff6b6b; padding: 12px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; display: flex; align-items: center; margin: 0 auto; gap: 10px; transition: 0.2s;">
-                    {% if request.user in post.likes.all %}
-                        <span style="font-size: 20px;">❤️</span> 좋아요 취소
-                    {% else %}
-                        <span style="font-size: 20px;">🤍</span> 좋아요
-                    {% endif %}
-                    <span style="border-left: 1px solid #ff6b6b; padding-left: 10px; font-size: 18px;">{{ post.total_likes }}</span>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">내용</label>
+                <textarea name="content" placeholder="레시피나 이야기를 들려주세요!" required
+                          style="width: 100%; height: 300px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; resize: none; line-height: 1.6;"></textarea>
+            </div>
+
+            <div style="text-align: right;">
+                <button type="submit" style="background: #ff6b6b; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s;">
+                    게시글 등록하기
                 </button>
-            </form>
-        </div>
-
-        {% if post.author == request.user %}
-        <div style="text-align: right; margin-top: 20px;">
-            <a href="{% url 'community:post_edit' post.id %}" class="btn" style="background:#4dabf7; color:white; text-decoration:none; padding:8px 15px; border-radius:5px;">수정</a>
-            <a href="{% url 'community:post_delete' post.id %}" class="btn" style="background:#ff6b6b; color:white; text-decoration:none; padding:8px 15px; border-radius:5px;" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
-        </div>
-        {% endif %}
-
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
-
-        <div id="comment-section">
-            <h3>댓글 {{ comments.count }}개</h3>
-            <form method="POST">
-                {% csrf_token %}
-                <textarea name="comment" placeholder="댓글을 입력해 주세요" style="width:100%; height:80px; padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
-                <button type="submit" style="margin-top:10px; background:#333; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">댓글 등록</button>
-            </form>
-
-            <ul style="list-style:none; padding:0; margin-top:20px;">
-                {% for comment in comments %}
-                <li style="padding:15px 0; border-bottom:1px solid #f9f9f9;">
-                    <strong>{{ comment.author.username }}</strong> <small style="color:#aaa; margin-left:10px;">{{ comment.created_at|date:"Y-m-d H:i" }}</small>
-                    <p style="margin: 5px 0;">{{ comment.content }}</p>
-                </li>
-                {% empty %}
-                <li style="color:#aaa;">첫 댓글을 남겨보세요!</li>
-                {% endfor %}
-            </ul>
-        </div>
+            </div>
+        </form>
     </div>
 </body>
 </html>

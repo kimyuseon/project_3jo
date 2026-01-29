@@ -12,15 +12,17 @@ def recipe_list(request):
     search_query = request.GET.get('q', '')
     ai_recommendation = ""
     
+
+    my_recipes = Recipe.objects.filter(user=request.user)
+    
     if search_query:
-        recipes = Recipe.objects.filter(
+        recipes = my_recipes.filter(
             Q(title__icontains=search_query) | Q(ingredients__icontains=search_query)
         ).order_by('-id')
         
         if request.GET.get('recommend') == 'true' or '추천' in search_query:
             try:
                 genai.configure(api_key=settings.GEMINI_API_KEY)            
-                
                 model = genai.GenerativeModel('gemini-2.5-flash')
                 
                 prompt = f"'{search_query}'와 관련된 요리 레시피를 제목, 재료, 요리 순서로 나누어 짧고 간결하게 한국어로 추천해줘."
@@ -29,17 +31,16 @@ def recipe_list(request):
                 ai_recommendation = response.text
                 
             except Exception as e:
-                ai_recommendation = print(f"AI error: {e}")
+                print(f"AI error: {e}")
 
     else:
-        recipes = Recipe.objects.all().order_by('-id')
+        recipes = my_recipes.order_by('-id')
 
     return render(request, 'my_recipe/recipe_list.html', {
         'recipes': recipes, 
         'search_query': search_query,
         'ai_recommendation': ai_recommendation
     })
-
 
 @login_required
 def recipe_add(request):
