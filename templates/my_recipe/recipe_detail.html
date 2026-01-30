@@ -10,7 +10,14 @@
     
     <div class="recipe-meta">
         <div class="author-info">
-            <span class="author-name">작성자 : {{ recipe.user.username }}</span>
+            <span class="author-name">
+                작성자 : 
+                {% if recipe.user %}
+                    {{ recipe.user.username }}
+                {% else %}
+                    공식 레시피
+                {% endif %}
+            </span>
         </div>
 
         <span class="difficulty-value {% if recipe.difficulty == '쉬움' %}diff-easy{% elif recipe.difficulty == '보통' %}diff-medium{% elif recipe.difficulty == '어려움' %}diff-hard{% endif %}">
@@ -34,7 +41,11 @@
     <section class="recipe-section ingredients-box">
         <h3>필요한 재료</h3>
         <div class="content-text">
-            {{ recipe.ingredients|linebreaks }}
+            {% if recipe.ingredients.all %}
+                {{ recipe.ingredients.all|join:", " }}
+            {% else %}
+                등록된 재료가 없습니다.
+            {% endif %}
         </div>
     </section>
 
@@ -48,11 +59,11 @@
     <div class="detail-actions">
         <a href="{% url 'my_recipe:recipe_list' %}" class="btn-back">목록으로 돌아가기</a>
         
-        {% if recipe.user == request.user or not recipe.user %}
+        {% if recipe.user and recipe.user == request.user %}
             <div class="owner-actions">
                 <a href="{% url 'my_recipe:recipe_edit' recipe.pk %}" class="btn-edit">수정하기</a>
                 
-                <form action="{% url 'my_recipe:recipe_delete' recipe.pk %}" method="post" class="delete-form">
+                <form action="{% url 'my_recipe:recipe_delete' recipe.pk %}" method="post" class="delete-form" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn-delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</button>
                 </form>

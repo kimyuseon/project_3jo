@@ -5,39 +5,37 @@ from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm
 from .models import Recipe
 from django.conf import settings
+from my_django.models import Ingredient
 
 @login_required
 def recipe_list(request):
-    search_query = request.GET.get('q', '')
-    ai_recommendation = ""
-    
-    my_recipes = Recipe.objects.filter(user=request.user)
-    
-    if search_query:
-        recipes = my_recipes.filter(Q(title__icontains=search_query) | Q(ingredients__icontains=search_query)).order_by('-id')
-        
-        if request.GET.get('recommend') == 'true' or '추천' in search_query:
-            try:
-                genai.configure(api_key=settings.GEMINI_API_KEY)            
-                model = genai.GenerativeModel('gemini-2.5-flash')
-                prompt = (
-                    f"사용자가 '{search_query}'와(과) 관련된 요리법을 알고 싶어해. "
-                    f"제목, 필요한 재료, 단계별 요리 순서로 나누어서 짧고 간결하게 한국어로 추천해줘.")
-                response = model.generate_content(prompt)
-                if response and response.text:
-                    ai_recommendation = response.text
-                
-            except Exception as e:
-                print(f"오류 원인: {e}")
-                ai_recommendation = "AI 추천을 가져오는 중에 문제가 생겼어요. 잠시 후 다시 시도해 주세요!"
+    recipes = Recipe.objects.filter(
+        Q(user__isnull=True) | Q(user__is_superuser=True)
+    ).prefetch_related('ingredients')
 
-    else:
-        recipes = my_recipes.order_by('-id')
+    my_ingredients = Ingredient.objects.filter(user=request.user).select_related('master_ingredient')
+    my_names = [ing.master_ingredient.name for ing in my_ingredients]
+
+    recipe_data = []
+    for recipe in recipes:
+        recipe_ingredient_names = [ing.name for ing in recipe.ingredients.all()]
+        
+        matched_in_recipe = [name for name in my_names if name in recipe_ingredient_names]
+        
+        recipe_data.append({
+            'obj': recipe,
+            'matched_list': matched_in_recipe,
+            'matched_count': len(matched_in_recipe)
+        })
+
+    if request.GET.get('fridge_recommend') == 'true':
+        recipe_data.sort(key=lambda x: x['matched_count'], reverse=True)
 
     return render(request, 'my_recipe/recipe_list.html', {
-        'recipes': recipes, 
-        'search_query': search_query,
-        'ai_recommendation': ai_recommendation
+        'recipes_with_match': recipe_data,
+        'search_query': request.GET.get('q', ''),
+        'my_names': my_names,
+        'is_archive': False,
     })
 
 @login_required
@@ -46,22 +44,21 @@ def recipe_add(request):
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save(commit=False)
-            recipe.user = request.user
+            recipe.user = request.user 
             recipe.save()
-            return redirect('my_recipe:recipe_list')
+            return redirect('my_recipe:my_recipe_archive')
     else:
         form = RecipeForm()
+    
     return render(request, 'my_recipe/recipe_add.html', {'form': form})
 
-@login_required
 def recipe_detail(request, pk):
-    # 내 글이 아니면 자동으로 404 오류
-    recipe = get_object_or_404(Recipe, pk=pk, user=request.user)
+    recipe = get_object_or_404(Recipe, pk=pk)
     return render(request, 'my_recipe/recipe_detail.html', {'recipe': recipe})
 
 @login_required
 def recipe_edit(request, pk):
-    # 수정 시에도 본인 확인 로직 강화
+
     recipe = get_object_or_404(Recipe, pk=pk, user=request.user)
 
     if request.method == "POST":
@@ -77,4 +74,20 @@ def recipe_edit(request, pk):
 def recipe_delete(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk, user=request.user)
     recipe.delete()
-    return redirect('my_recipe:recipe_list')
+    return redirect('my_recipe:my_recipe_archive')
+
+@login_required
+def my_recipe_archive(request):
+    my_recipes = Recipe.objects.filter(user=request.user).order_by('-id')
+    
+    recipe_data = []
+    for recipe in my_recipes:
+        recipe_data.append({
+            'obj': recipe,
+            'matched_count': 0 
+        })
+
+    return render(request, 'my_recipe/recipe_list.html', {
+        'recipes_with_match': recipe_data,
+        'is_archive': True,
+    })
