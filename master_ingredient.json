@@ -1,0 +1,265 @@
+[
+{
+  "model": "my_django.masteringredient",
+  "pk": 1,
+  "fields": {
+    "name": "당근",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 2,
+  "fields": {
+    "name": "양파",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 3,
+  "fields": {
+    "name": "대파",
+    "category": "채소"
+  }
+},
+
+{
+  "model": "my_django.masteringredient",
+  "pk": 6,
+  "fields": {
+    "name": "감자",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 7,
+  "fields": {
+    "name": "게",
+    "category": "해산물"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 8,
+  "fields": {
+    "name": "고추",
+    "category": "채소"
+  }
+},
+
+{
+  "model": "my_django.masteringredient",
+  "pk": 11,
+  "fields": {
+    "name": "닭고기",
+    "category": "육류"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 12,
+  "fields": {
+    "name": "돼지고기",
+    "category": "육류"
+  }
+
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 14,
+  "fields": {
+    "name": "두부",
+    "category": "가공식품"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 15,
+  "fields": {
+    "name": "레몬",
+    "category": "과일"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 16,
+  "fields": {
+    "name": "마늘",
+    "category": "채소"
+  }
+},
+
+{
+  "model": "my_django.masteringredient",
+  "pk": 18,
+  "fields": {
+    "name": "망고",
+    "category": "과일"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 19,
+  "fields": {
+    "name": "무",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 20,
+  "fields": {
+    "name": "바나나",
+    "category": "과일"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 21,
+  "fields": {
+    "name": "버섯",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 22,
+  "fields": {
+    "name": "베이컨",
+    "category": "가공식품"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 23,
+  "fields": {
+    "name": "브로콜리",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 24,
+  "fields": {
+    "name": "사과",
+    "category": "과일"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 25,
+  "fields": {
+    "name": "새우",
+    "category": "해산물"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 26,
+  "fields": {
+    "name": "소고기",
+    "category": "육류"
+  }
+
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 28,
+  "fields": {
+    "name": "소시지",
+    "category": "가공식품"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 29,
+  "fields": {
+    "name": "아보카도",
+    "category": "과일"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 30,
+  "fields": {
+    "name": "애호박",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 31,
+  "fields": {
+    "name": "어묵",
+    "category": "가공식품"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 32,
+  "fields": {
+    "name": "연어",
+    "category": "해산물"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 33,
+  "fields": {
+    "name": "오리고기",
+    "category": "육류"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 34,
+  "fields": {
+    "name": "오이",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 35,
+  "fields": {
+    "name": "오징어",
+    "category": "해산물"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 38,
+  "fields": {
+    "name": "참치",
+    "category": "해산물"
+  }
+
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 40,
+  "fields": {
+    "name": "토마토",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 41,
+  "fields": {
+    "name": "파프리카",
+    "category": "채소"
+  }
+},
+{
+  "model": "my_django.masteringredient",
+  "pk": 42,
+  "fields": {
+    "name": "햄",
+    "category": "가공식품"
+  }
+},
+
+]

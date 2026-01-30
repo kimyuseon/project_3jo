@@ -8,52 +8,31 @@
     <link rel="stylesheet" href="{% static 'css/my_django.css' %}">
     <style>
         .floating-menu {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            padding: 0 20px;
-            box-sizing: border-box;
-            position: fixed;
-            bottom: 30px;
-            width: 100%;
-            z-index: 1000;
+            display: flex; gap: 8px; justify-content: center; padding: 0 10px;
+            box-sizing: border-box; position: fixed; bottom: 30px; width: 100%; z-index: 1000;
         }
         .floating-btn {
-            flex: 1;
-            max-width: 180px;
-            height: 50px;
-            border-radius: 25px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            text-decoration: none;
+            flex: 1; max-width: 120px; height: 50px; border-radius: 25px; text-align: center;
+            font-size: 12px; font-weight: bold; cursor: pointer; border: none;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); text-decoration: none;
         }
         .btn-add { background-color: #ff6b6b; color: white; }
+        .btn-recommend { background-color: #2ecc71 !important; color: white; }
         .btn-receipt { background-color: #4facfe !important; color: white; }
 
-        .quantity-badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background-color: #ff6b6b;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 10px;
-            z-index: 2;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* 삭제 버튼 빨간색 유지 */
+        .delete-btn {
+            position: absolute; top: 8px; right: 8px; border: none; background: none;
+            color: #ff6b6b; cursor: pointer; font-size: 16px; font-weight: bold;
         }
         
-        .card {
-            position: relative;
+        .quantity-badge {
+            position: absolute; top: 8px; left: 8px; background-color: #ff6b6b;
+            color: white; font-size: 10px; font-weight: bold; padding: 2px 6px;
+            border-radius: 10px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        .card { position: relative; }
     </style>
 </head>
 <body>
@@ -76,7 +55,6 @@
             </div>
         {% else %}
             {% regroup ingredients by master_ingredient.category as category_list %}
-            
             {% for category in category_list %}
                 <div class="category-section">
                     <h2 class="category-title">{{ category.grouper }} <span>({{ category.list|length }})</span></h2>
@@ -84,41 +62,21 @@
                         {% for item in category.list %}
                         <div class="card">
                             <div class="quantity-badge">{{ item.quantity }}</div>
-
                             <form action="{% url 'my_django:delete_ingredient' item.pk %}" method="post" onsubmit="return confirm('삭제하시겠습니까?');">
-                                {% csrf_token %}
-                                <button type="submit" class="delete-btn">✕</button>
+                                {% csrf_token %}<button type="submit" class="delete-btn">✕</button>
                             </form>
-                            
                             <div class="image-box" style="margin-bottom: 5px; height: 45px; display: flex; align-items: center; justify-content: center;">
-                             {% static 'images/default.png' as default_img %}
-                            <img src="{% static 'images/' %}{{ item.master_ingredient.name }}.png" 
-                            alt="{{ item.master_ingredient.name }}" 
-                            style="width: 40px; height: 40px; object-fit: contain;"
-                            onerror="this.onerror=null; this.src='{{ default_img }}';">
+                                <img src="{% static 'images/' %}{{ item.master_ingredient.name }}.png" 
+                                     alt="{{ item.master_ingredient.name }}" 
+                                     style="width: 40px; height: 40px; object-fit: contain;"
+                                     onerror="this.onerror=null; this.src='{% static 'images/default.png' %}';">
                             </div>
-
                             <span class="name">{{ item.master_ingredient.name }}</span>
                             <div class="d-day">{{ item.get_d_day }}</div>
-                                <!-- <img src="{% static 'images/' %}{{ item.name }}.png" 
-                                     alt="{{ item.name }}" 
-                                     style="width: 40px; height: 40px; object-fit: contain;">
-                            </div>
-
-                            <span class="name">
-                                {{ item.name }} 
-                                <small style="color: #888; font-size: 0.85em;">({{ item.quantity }})</small>
-                            </span>
-                            
-                            <div class="d-day {% if item.is_expiring_today %}expiring{% endif %}">
-                                {{ item.get_d_day }}
-                            </div> -->
-                            
                             <form action="{% url 'my_django:update_expiry' item.pk %}" method="post">
                                 {% csrf_token %}
                                 <input type="date" name="expiry_date" class="date-input"
-                                       value="{{ item.expiry_date|date:'Y-m-d' }}"
-                                       onchange="this.form.submit()">
+                                       value="{{ item.expiry_date|date:'Y-m-d' }}" onchange="this.form.submit()">
                             </form>
                         </div>
                         {% endfor %}
@@ -130,16 +88,12 @@
         <div style="height: 120px;"></div>
         
         <div class="floating-menu">
-            <a href="{% url 'my_django:ingredient_select' %}" class="floating-btn btn-add">
-                + 직접 추가
-            </a>
-
-            <form action="{% url 'my_django:upload_receipt' %}" method="post" enctype="multipart/form-data" id="receipt-form" style="flex: 1; max-width: 180px;">
+            <a href="{% url 'my_django:ingredient_select' %}" class="floating-btn btn-add">+ 직접 추가</a>
+            <a href="{% url 'my_django:recommend_recipe' %}" class="floating-btn btn-recommend" id="recommend-btn" onclick="handleRecipeRecommend()">🍳 레시피 추천</a>
+            <form action="{% url 'my_django:upload_receipt' %}" method="post" enctype="multipart/form-data" id="receipt-form" style="flex: 1; max-width: 120px;">
                 {% csrf_token %}
                 <input type="file" name="receipt_image" id="receipt_file" accept="image/*" style="display: none;" onchange="handleReceiptUpload()">
-                <label for="receipt_file" class="floating-btn btn-receipt">
-                    📸 영수증 추가
-                </label>
+                <label for="receipt_file" class="floating-btn btn-receipt" id="receipt-label">📸 영수증 추가</label>
             </form>
         </div>
     </div>
@@ -147,14 +101,21 @@
     <script>
         function handleReceiptUpload() {
             const form = document.getElementById('receipt-form');
-            const label = document.querySelector('label[for="receipt_file"]');
-            
+            const label = document.getElementById('receipt-label');
             if (form && label) {
                 label.innerHTML = "분석 중...";
                 label.style.opacity = "0.6";
                 label.style.pointerEvents = "none";
-                
                 form.submit();
+            }
+        }
+
+        function handleRecipeRecommend() {
+            const btn = document.getElementById('recommend-btn');
+            if (btn) {
+                btn.innerHTML = "레시피 제작중...";
+                btn.style.opacity = "0.6";
+                btn.style.pointerEvents = "none";
             }
         }
     </script>

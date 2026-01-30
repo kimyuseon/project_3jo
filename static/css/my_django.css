@@ -6,7 +6,6 @@ body {
     color: #333;
 }
 
-/* [수정] 본문 영역을 넓게 쓰기 위해 max-width 상향 및 유연하게 변경 */
 .container {
     max-width: 1200px; /* 600px에서 1200px로 확장 */
     margin: 0 auto;
@@ -50,10 +49,9 @@ body {
     font-weight: bold;
 }
 
-/* [수정] 그리드: 화면이 넓어지면 카드가 더 많이 보이도록 설정 */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 3개 고정에서 자동 채우기로 변경 */
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 15px;
 }
 
