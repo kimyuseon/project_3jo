@@ -29,6 +29,10 @@
         box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3) !important;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .ai-box {
+        animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 
 <div class="recipe-grid-container">
@@ -51,7 +55,7 @@
         <div style="margin-bottom: 15px; font-size: 14px; color: #666;">
             💡 <strong>공식 레시피:</strong> 서비스가 제공하는 검증된 가이드입니다.
         </div>
-        <form action="{% url 'my_recipe:recipe_list' %}" method="GET" class="search-form" style="display: flex; gap: 8px;">
+        <form action="{% url 'my_recipe:recipe_list' %}" method="GET" class="search-form" style="display: flex; gap: 8px; margin-bottom: 20px;">
             <input type="text" name="q" value="{{ search_query }}" placeholder="공식 레시피 검색" 
                    style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #eee; font-size: 14px;">
             <button type="submit" class="btn-search" style="padding: 0 15px; background: #eee; border: none; border-radius: 10px; font-weight: bold;">검색</button>
@@ -65,8 +69,23 @@
                     style="padding: 0 15px; background: #5e35b1; color: white; border: none; border-radius: 10px; font-weight: bold;"
                     onclick="document.getElementById('loading-overlay').style.display='block';">AI 레시피 추천</button>
         </form>
+
+        {% if ai_recommendation %}
+        <div class="ai-box" style="background: #f3e5f5; border: 1px solid #d1c4e9; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(94, 53, 177, 0.1);">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #4527a0; font-size: 18px;">AI 추천 레시피</h3>
+            </div>
+            <div style="line-height: 1.6; color: #333; font-size: 15px; white-space: pre-wrap;">
+                {{ ai_recommendation|linebreaks }}
+            </div>
+            <div style="margin-top: 15px; font-size: 12px; color: #7e57c2; text-align: right;">
+                * AI 생성 결과는 참고용으로만 활용하세요.
+            </div>
+        </div>
+        {% endif %}
+
         {% else %}
-        <div style="background: #fff5f5; padding: 15px; border-radius: 10px; color: #ff6b6b; font-size: 14px;">
+        <div style="background: #fff5f5; padding: 15px; border-radius: 10px; color: #ff6b6b; font-size: 14px; margin-bottom: 20px;">
             <strong>나만의 보관함:</strong> 직접 등록한 레시피들입니다. 추천 레시피 목록에는 노출되지 않습니다.
         </div>
         {% endif %}
