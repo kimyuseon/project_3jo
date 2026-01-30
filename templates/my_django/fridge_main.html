@@ -21,7 +21,6 @@
         .btn-recommend { background-color: #2ecc71 !important; color: white; }
         .btn-receipt { background-color: #4facfe !important; color: white; }
 
-        /* 삭제 버튼 빨간색 유지 */
         .delete-btn {
             position: absolute; top: 8px; right: 8px; border: none; background: none;
             color: #ff6b6b; cursor: pointer; font-size: 16px; font-weight: bold;
@@ -33,6 +32,12 @@
             border-radius: 10px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .card { position: relative; }
+
+        /* 추가된 스타일: 유통기한 만료/당일 강조 */
+        .expired-text {
+            color: #ff0000 !important;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -72,7 +77,11 @@
                                      onerror="this.onerror=null; this.src='{% static 'images/default.png' %}';">
                             </div>
                             <span class="name">{{ item.master_ingredient.name }}</span>
-                            <div class="d-day">{{ item.get_d_day }}</div>
+                            
+                            <div class="d-day {% if item.is_expiring_today %}expired-text{% endif %}">
+                                {{ item.get_d_day }}
+                            </div>
+
                             <form action="{% url 'my_django:update_expiry' item.pk %}" method="post">
                                 {% csrf_token %}
                                 <input type="date" name="expiry_date" class="date-input"
