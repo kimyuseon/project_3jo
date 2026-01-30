@@ -17,4 +17,4 @@ db.sqlite3
 .DS_Store
 
 # IDE(VScode) 설정
-.vscode/
+.vscode/db.sqlite3
