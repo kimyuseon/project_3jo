@@ -10,7 +10,7 @@ def signup_view(request): # 회원가입 기능
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
-            user.save()  # 들여쓰기 맞춰서 정리!
+            user.save()  
             
             UserProfile.objects.create(user=user)
             auth_login(request, user)

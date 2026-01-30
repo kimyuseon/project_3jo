@@ -191,3 +191,20 @@ body {
     white-space: nowrap;
     display: inline-block; 
 }
+
+button, 
+a, 
+input[type="submit"], 
+input[type="button"],
+.tab-item,
+.btn-search,
+.btn-ai,
+.ing-item {
+    cursor: pointer !important;
+}
+
+
+.btn-search:hover, .btn-ai:hover {
+    opacity: 0.8;
+    transition: 0.2s;
+}
