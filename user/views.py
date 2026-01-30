@@ -1,26 +1,24 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .forms import SignUpForm
 from .models import UserProfile
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.shortcuts import redirect
 
-
-def signup_view(request): #회원가입 기능
+def signup_view(request): # 회원가입 기능
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
-            user.save()
+            user.save()  # 들여쓰기 맞춰서 정리!
+            
             UserProfile.objects.create(user=user)
-            return redirect('user:login')
+            auth_login(request, user)
+            return redirect('user:index') 
     else:
         form = SignUpForm()
     
-    return render(request, 'user/signup.html', {'form':form})
+    return render(request, 'user/signup.html', {'form': form})
 
 
 def login_view(request): #로그인 기능
