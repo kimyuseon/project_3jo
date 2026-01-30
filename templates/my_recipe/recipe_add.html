@@ -11,16 +11,40 @@
         {% csrf_token %}
         <div class="form-fields">
             {% for field in form %}
-            <div class="field-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% if field.help_text %}
-                    <small class="help-text">{{ field.help_text }}</small>
+                {% if field.name == 'ingredients' %}
+                    <div class="field-group ingredients-selection">
+                        <label>{{ field.label }}</label>
+                        <div class="category-wrapper p-3 border rounded bg-white">
+                            {% for category, ingredients in form.ingredients_by_category.items %}
+                                <div class="category-group mb-3">
+                                    <h5 class="category-name text-primary mb-2" style="font-size: 1rem; border-bottom: 2px solid #f0f0f0;">
+                                        {{ category }}
+                                    </h5>
+                                    <div class="ingredient-checkboxes d-flex flex-wrap gap-2">
+                                        {% for ing in ingredients %}
+                                            <div class="ing-item d-flex align-items-center me-3 mb-2">
+                                                <input type="checkbox" name="ingredients" value="{{ ing.pk }}" 
+                                                       id="ing_{{ ing.pk }}" class="custom-check"
+                                                       {% if ing.pk|stringformat:"i" in field.value or ing in field.value %}checked{% endif %}>
+                                                <label for="ing_{{ ing.pk }}" class="ms-1 mb-0">{{ ing.name }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p class="text-muted">등록된 재료가 없습니다.</p>
+                            {% endfor %}
+                        </div>
+                        {% if field.errors %}<div class="field-errors">{{ field.errors }}</div>{% endif %}
+                    </div>
+                {% else %}
+                    <div class="field-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}<small class="help-text">{{ field.help_text }}</small>{% endif %}
+                        {% if field.errors %}<div class="field-errors">{{ field.errors }}</div>{% endif %}
+                    </div>
                 {% endif %}
-                {% if field.errors %}
-                    <div class="field-errors">{{ field.errors }}</div>
-                {% endif %}
-            </div>
             {% endfor %}
         </div>
 
@@ -30,4 +54,27 @@
         </div>
     </form>
 </div>
+
+<style>
+    .ingredient-checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .ing-item {
+        background: #fdfdfd;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+    }
+    .category-wrapper {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    .custom-check {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+</style>
 {% endblock %}
