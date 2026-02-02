@@ -1,0 +1,38 @@
+[
+{
+  "model": "community.post",
+  "pk": 23,
+  "fields": {
+    "author": 8,
+    "title": "용복이 브라우니 레시피",
+    "content": "겉바속촉하고 쫀득, 꾸덕한 필릭스의 브라우니 레시피 공유합니다!\r\n(🍫다크초콜릿 카카오 55~75% 사용하고 하루 냉장 후 다음날 먹으면 더 맛있음!!)\r\n\r\n1 다크초콜릿 200g + 무염버터 120g 중탕(또는 전자레인지)으로 녹여 섞기\r\n\r\n2 계란 2개 + 설탕 120g 거품 안 나게 그냥 섞기\r\n\r\n3 녹인 초콜릿을 계란 반죽에 넣고 섞기\r\n\r\n4 박력분 60g + 코코아파우더 20g + 소금 한 꼬집 체쳐 넣고 가볍게 섞기\r\n\r\n5 틀에 붓고 170도 예열 오븐에서 20~23분 굽기 (가운데 살짝 흔들릴 때 꺼내기, 다 구우면 그냥 초코케이크 만드신겁니다,,)\r\n\r\n6 실온 30분 → 냉장 1시간 이상 굳히기 후 자르기",
+    "thumbnail": "community/vecteezy_indulgent-slice-of-homemade-dark-chocolate-fudge-generated_25184701_KyFdnes.jpg",
+    "created_at": "2026-02-02T09:40:53.579",
+    "likes": []
+  }
+},
+{
+  "model": "community.post",
+  "pk": 24,
+  "fields": {
+    "author": 8,
+    "title": "에어프라이기로 만드는 페퍼로니 피자",
+    "content": "1 식빵 위에 케첩 또는 토마토소스 얇게 바르기(두껍게 발라도 좋아요)\r\n\r\n2 모짜렐라 치즈 넉넉히 올리기\r\n\r\n3 페퍼로니 올리기\r\n\r\n4 에어프라이어 180도 예열\r\n\r\n5 180도에서 5~7분 굽기(치즈가 녹고 가장자리가 노릇해지면 완성!)",
+    "thumbnail": "community/pexels-khezez-29966770_LD5aytN.jpg",
+    "created_at": "2026-02-02T09:42:52.584",
+    "likes": []
+  }
+},
+{
+  "model": "community.post",
+  "pk": 25,
+  "fields": {
+    "author": 8,
+    "title": "집에서 해먹는 스테이크🥩(굽기 : 미디움웰던)",
+    "content": "✓고기 구매 추천 부위\r\n- 안심 : 가장 연하고 부드러워요\r\n- 립아이 : 기름이 적당히 있고 초보자도 실패하기가 적어요\r\n- 뉴욕 스트립 : 지방이 적당하고 고소하고 담백해요\r\n\r\n✓정육점에서 꽃등심 스테이크용 2~3cm로 주세요 하면 돼요!\r\n\r\n1 스테이크를 굽기 30분 전 냉장고에서 꺼내 실온 두기\r\n\r\n2 키친타월로 물기 제거 후 소금, 후추 넉넉히 뿌리기\r\n\r\n3 팬을 강불로 충분히 예열하고 식용유 두르기\r\n\r\n4 고기 올리고 한 면 2분 30초동안 굽기, 구우면서 고기는 건드리지 않기\r\n(고기를 더 익히고 싶으면 각 면마다 30초씩 추가하면 됩니다)\r\n\r\n5 뒤집어서 2분 굽기\r\n\r\n6 버터 1조각 + 마늘 + 허브(있으면) 넣고 끼얹으며 1분 굽기\r\n\r\n7 불 끄고 접시에 옮겨 5분 레스팅하기!\r\n",
+    "thumbnail": "community/vecteezy_grilled-steak-juicy-and-tender-ready-to-eat-on-rustic_27902975.jpg",
+    "created_at": "2026-02-02T10:21:34.622",
+    "likes": []
+  }
+}
+]

@@ -46,7 +46,7 @@ def recipe_list(request):
     if request.GET.get('recommend') == 'true' and search_query:
         try:
             genai.configure(api_key=settings.GEMINI_API_KEY)
-            model = genai.GenerativeModel('gemini-1.5-flash') 
+            model = genai.GenerativeModel('gemini-2.5-flash') 
             prompt = f"'{search_query}'를 활용한 요리 레시피를 제목, 재료, 요리 순서로 나누어 짧고 간결하게 한국어로 추천해줘. ***같은 기호는 사용하지마"
             response = model.generate_content(prompt)
             ai_recommendation = response.text
