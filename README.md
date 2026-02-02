@@ -15,10 +15,14 @@ source my_env/Scripts/activate(Windows)
 #필수 패키지 설치
 pip install -r requirements.txt
 
-#실행 전 데이터베이스 마이그레이션을 꼭 진행해 주세요!
+#.env파일 생성하고 gemini API키를 받아 입력해주세요.
+GEMINI_API_KEY=발급받은_API_키
 
-python manage.py makemigrations
+#DB 테이블 생성
 python manage.py migrate
+
+#재료 로드하기
+python manage.py loaddata master_ingredient.json
 
 #관리자 페이지 접속용 관리자 계정 생성
 python manage.py createsuperuser
@@ -54,7 +58,7 @@ python manage.py runserver
 (미디어 파일(사진) 테스트 시 media/ 폴더 내에 데이터가 정상적으로 생성되는지 확인하실 수 있습니다.)
 
 
-<커뮤니티 게시판>
+<커뮤니티 기능 테스트 가이드>
 - 이미지 게시글 등록: 우측 상단 [새글 작성하기]를 통해 사진을 첨부하여 글을 등록하고, 목록에서 이미지가 올바르게 출력되는지 확인합니다.
 (미디어 파일(사진) 테스트 시 media/ 폴더 내에 데이터가 정상적으로 생성되는지 확인하실 수 있습니다.)
 
