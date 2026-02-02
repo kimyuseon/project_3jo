@@ -2,7 +2,6 @@
 my_env/
 venv/
 .env
-media/
 
 # 파이썬 실행 시 생성되는 캐시 파일
 __pycache__/
