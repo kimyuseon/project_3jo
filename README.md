@@ -1,3 +1,5 @@
+readme.txt
+
 
 프로젝트명 : AI기반 냉장고 보유 재료 레시피 추천 서비스
 - 내 냉장고 속 재료를 스마트하게 관리하고 AI를 통해 최적의 레시피를 추천받는 서비스입니다.
@@ -26,6 +28,9 @@ GEMINI_API_KEY=발급받은_API_키
 #DB 테이블 생성
 python manage.py migrate
 
+#관리자 페이지 접속용 관리자 계정 생성
+python manage.py createsuperuser
+
 #이미지 및 데이터 동기화 안내
 #준비된 기초데이터 불러오기
 python manage.py loaddata master_ingredient.json
@@ -38,8 +43,6 @@ python manage.py loaddata master_ingredient.json
 나만의 레시피 게시글 이미지 : test_image/my_recipe 
 나의 냉장고 영수증 인식 기능 테스트용 : test_image/영수증.png 
 
-#관리자 페이지 접속용 관리자 계정 생성
-python manage.py createsuperuser
 
 #서버실행
 python manage.py runserver
