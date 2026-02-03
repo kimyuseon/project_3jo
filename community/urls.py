@@ -12,4 +12,6 @@ urlpatterns = [
     re_path(r"^posts/(?P<post_id>\d+)/delete/$", views.post_delete, name="post_delete"), #삭제
     re_path(r'^posts/(?P<post_id>\d+)/edit/$', views.post_edit, name='post_edit'), #수정
     re_path(r"^(?P<post_id>\d+)/like/$", views.post_like, name="post_like"),
+    re_path(r'^post/(?P<post_id>\d+)/comment/(?P<comment_id>\d+)/edit/$', views.comment_edit, name='comment_edit'),
+    re_path(r'^post/(?P<post_id>\d+)/comment/(?P<comment_id>\d+)/delete/$',views.comment_delete, name='comment_delete'),
 ]
