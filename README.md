@@ -1,5 +1,3 @@
-readme.txt
-
 
 프로젝트명 : AI기반 냉장고 보유 재료 레시피 추천 서비스
 - 내 냉장고 속 재료를 스마트하게 관리하고 AI를 통해 최적의 레시피를 추천받는 서비스입니다.
@@ -35,14 +33,12 @@ python manage.py createsuperuser
 #준비된 기초데이터 불러오기
 python manage.py loaddata master_ingredient.json
 
+
 #이미지 동기화
 현재 저장소의 test_image 폴더 내에 있는 community와 my_recipe 폴더는 작성된 게시글과 매칭되는 이미지들입니다.
-화면에서 이미지가 정상적으로 출력되도록 test_image 안의 폴더 들을 media/ 폴더안으로 복사하시면 정상적으로 출력됩니다.
+화면에서 이미지가 정상적으로 출력되도록 test_image폴더의 이름을 media로 변경하시면 정상출력됩니다.
 
-커뮤니티 게시판 사진 : test_image/community 
-나만의 레시피 게시글 이미지 : test_image/my_recipe 
-나의 냉장고 영수증 인식 기능 테스트용 : test_image/영수증.png 
-
+나의 냉장고 영수증 인식 기능 테스트용 : test_image/영수증.png
 
 #서버실행
 python manage.py runserver
@@ -53,7 +49,7 @@ python manage.py runserver
 (필수 기능 테스트 가이드)
 
 
-<걔정>
+<계정>
 - 회원가입 : 아이디, 비밀번호를 입력하여 가입을 진행합니다. 중복 아이디체크나 비밀번호 일치 여부의 유효성 검사가 작동하는지 확인합니다. 가입완료 후 별도의 재로그인 없이 즉시 로그인 상태가 유지되는지 확인합니다.
 
 - 로그인/로그아웃 : 가입한 계정으로 로그인하여 세션의 유지여부를 확인합니다.(냉장고 홈화면에서 확인가능).로그아웃 후 냉장고 홈화면에서 로그인을 요청하는 화면이 뜨는지 확인합니다.
