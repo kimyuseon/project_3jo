@@ -1,8 +1,11 @@
-readme.txt
-
 
 프로젝트명 : AI기반 냉장고 보유 재료 레시피 추천 서비스
-내 냉장고 속 재료를 스마트하게 관리하고 AI를 통해 최적의 레시피를 추천받을 수 있습니다.
+- 내 냉장고 속 재료를 스마트하게 관리하고 AI를 통해 최적의 레시피를 추천받는 서비스입니다.
+
+
+- 본 프로젝트의 정상적인 작동과 데이터 확인을 위해 아래 가이드의 모든 단계는 필수입니다.
+누락되는 단계가 있을 경우에는 기능이 제한이 될 수 있으니 반드시 순서대로 진행해주세요.
+
 
 #복제
 git clone https://github.com/kimyuseon/project_3jo.git .
@@ -16,19 +19,31 @@ source my_env/Scripts/activate(Windows)
 pip install -r requirements.txt
 
 #.env파일 생성하고 gemini API키를 받아 입력해주세요.
+- Gemini API key 발급 : https://aistudio.google.com/app/u/1/api-keys
 GEMINI_API_KEY=발급받은_API_키
+
 
 #DB 테이블 생성
 python manage.py migrate
 
-#재료 로드하기
+#이미지 및 데이터 동기화 안내
+#준비된 기초데이터 불러오기
 python manage.py loaddata master_ingredient.json
+
+#이미지 동기화
+현재 저장소의 test_image 폴더 내에 있는 community와 my_recipe 폴더는 작성된 게시글과 매칭되는 이미지들입니다.
+화면에서 이미지가 정상적으로 출력되도록 test_image 안의 폴더 들을 media/ 폴더안으로 복사하시면 정상적으로 출력됩니다.
+
+커뮤니티 게시판 사진 : test_image/community 
+나만의 레시피 게시글 이미지 : test_image/my_recipe 
+나의 냉장고 영수증 인식 기능 테스트용 : test_image/영수증.png 
 
 #관리자 페이지 접속용 관리자 계정 생성
 python manage.py createsuperuser
 
 #서버실행
 python manage.py runserver
+
 
 
 
