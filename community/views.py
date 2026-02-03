@@ -96,3 +96,33 @@ def post_like(request, post_id):
         post.likes.add(request.user)    
         
     return redirect('community:post_detail', post_id=post_id)
+
+# 댓글 삭제
+@login_required
+def comment_delete(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    
+    if comment.author == request.user:
+        comment.delete()
+    
+    return redirect("community:post_detail", post_id=post_id)
+
+# 댓글 수정
+@login_required
+def comment_edit(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    
+    if comment.author != request.user:
+        return redirect("community:post_detail", post_id=post_id)
+
+    if request.method == "POST":
+        new_content = request.POST.get("comment")
+        if new_content:
+            comment.content = new_content
+            comment.save()
+            return redirect("community:post_detail", post_id=post_id)
+
+    return render(request, "community/comment_edit.html", {
+        "comment": comment, 
+        "post_id": post_id
+    })

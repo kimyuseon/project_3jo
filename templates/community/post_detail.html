@@ -21,12 +21,9 @@
             {% if post.author == request.user %}
             <div style="display: flex; gap: 8px;">
                 <a href="{% url 'community:post_edit' post.id %}" class="btn" style="background:#f1f1f1; color:#333; font-size:0.85rem; text-decoration:none; padding:5px 10px; border-radius:5px;">수정하기</a>
-                
                 <form action="{% url 'community:post_delete' post.id %}" method="POST" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn" 
-                            style="background:#ffebee; color:#c62828; font-size:0.85rem; border:none; cursor:pointer; padding:5px 10px; border-radius:5px;"
-                            onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</button>
+                    <button type="submit" class="btn" style="background:#ffebee; color:#c62828; font-size:0.85rem; border:none; cursor:pointer; padding:5px 10px; border-radius:5px;" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</button>
                 </form>
             </div>
             {% endif %}
@@ -45,8 +42,10 @@
                 {% csrf_token %}
                 <button type="submit" style="background: white; border: 1px solid #ff6b6b; color: #ff6b6b; padding: 8px 18px; border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.2s;">
                     {% if request.user in post.likes.all %}
-                        <i class="fa-solid fa-heart" style="font-size: 18px;"></i> {% else %}
-                        <i class="fa-regular fa-heart" style="font-size: 18px;"></i> {% endif %}
+                        <i class="fa-solid fa-heart" style="font-size: 18px;"></i> 
+                    {% else %}
+                        <i class="fa-regular fa-heart" style="font-size: 18px;"></i> 
+                    {% endif %}
                     <span style="border-left: 1px solid #ff6b6b; padding-left: 10px; font-size: 16px;">{{ post.total_likes }}</span>
                 </button>
             </form>
@@ -57,8 +56,19 @@
         <h3>댓글 ({{ post.comment_set.count }})</h3>
         <ul style="list-style:none; padding:0;">
             {% for comment in post.comment_set.all %}
-                <li style="border-bottom:1px solid #eee; padding:10px 0;">
-                    <strong>{{ comment.author.username }}:</strong> {{ comment.content }}
+                <li style="border-bottom:1px solid #eee; padding:10px 0; display: flex; justify-content: space-between;">
+                    <div>
+                        <strong>{{ comment.author.username }}:</strong> {{ comment.content }}
+                    </div>
+                    {% if comment.author == request.user %}
+                    <div style="font-size: 0.8rem;">
+                        <a href="{% url 'community:comment_edit' post.id comment.id %}" style="color: #888; text-decoration: none; margin-right: 10px;">수정</a>
+                        <form action="{% url 'community:comment_delete' post.id comment.id %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background: none; border: none; color: #ff6b6b; cursor: pointer; padding: 0;" onclick="return confirm('댓글을 삭제하시겠습니까?')">삭제</button>
+                        </form>
+                    </div>
+                    {% endif %}
                 </li>
             {% empty %}
                 <li>첫 댓글을 남겨보세요!</li>

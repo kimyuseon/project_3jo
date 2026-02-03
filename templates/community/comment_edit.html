@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static 'css/community.css' %}">
+    <title>댓글 수정</title>
+</head>
+<body>
+    <div id="navbar">
+        <a href="{% url 'community:post_detail' post_id %}" style="text-decoration:none; color:#333;">← 돌아가기</a>
+        <span>커뮤니티 : <b>댓글 수정</b></span>
+    </div>
+
+    <div id="post-detail" style="margin-top: 50px;">
+        <h2>댓글 수정하기</h2>
+        <hr>
+        
+        <form method="POST" style="margin-top:20px;">
+            {% csrf_token %}
+            <textarea name="comment" 
+                      style="width:100%; height:100px; border-radius:10px; padding:15px; border:1px solid #ddd; box-sizing: border-box; font-size: 1rem;" 
+                      required>{{ comment.content }}</textarea>
+            
+            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                <button type="submit" class="btn" 
+                        style="background:#4a90e2; color:white; border:none; padding:10px 25px; border-radius:5px; cursor:pointer; font-weight:bold;">수정 완료</button>
+                <a href="{% url 'community:post_detail' post_id %}" 
+                   style="background:#f1f1f1; color:#333; text-decoration:none; padding:10px 25px; border-radius:5px; font-size: 0.9rem;">취소</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
